@@ -1,13 +1,9 @@
-# Demo
-
-Site is available at [https://systemseed.com](https://systemseed.com).
-
 # Installation
 
 1. Clone git repo locally, then
 
     ```
-    cd systemseed.com
+    cd drupal_reactjs_boilerplate
     make install
     ```
 
