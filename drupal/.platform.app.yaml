@@ -1,0 +1,141 @@
+# This file describes an application. You can have multiple applications
+# in the same project.
+#
+# See https://docs.platform.sh/user_guide/reference/platform-app-yaml.html
+
+# The name of the app. Must be unique within a project.
+name: 'backend'
+
+runtime:
+    extensions:
+        - newrelic
+
+# The runtime the application uses.
+type: 'php:7.2'
+size: S
+
+# Configuration of the build of this application.
+build:
+    flavor: composer
+
+# The relationships of the application with services or other applications.
+#
+# The left-hand side is the name of the relationship as it will be exposed
+# to the application in the PLATFORM_RELATIONSHIPS variable. The right-hand
+# side is in the form `<service name>:<endpoint name>`.
+relationships:
+    database: 'mariadb:mysql'
+
+# The build-time dependencies of the app.
+dependencies:
+    php:
+        'drush/drush': '^8.0'
+        # Comment out drupal console for now because it conflicts with `platformsh/cli` in Drupal 8.
+        # 'drupal/console': '@stable'
+        'platformsh/cli': '3.26.1'
+        # Requirements for Backup script (./scripts/upload_backups.php)
+        "aws/aws-sdk-php": "^3.39"
+        "platformsh/config-reader": "^0.0.1"
+
+variables:
+  php:
+    memory_limit: 256M
+    auto_detect_line_endings: 1
+
+# The configuration of app when it is exposed to the web.
+web:
+    # Specific parameters for different URL prefixes.
+    locations:
+        '/admin':
+            # The folder from which to serve static assets, for this location.
+            #
+            # This is a filesystem path, relative to the application root.
+            root: 'web'
+
+            # How long to allow static assets from this location to be cached.
+            #
+            # Can be a time in seconds, or -1 for no caching. Times can be
+            # suffixed with "s" (seconds), "m" (minutes), "h" (hours), "d"
+            # (days), "w" (weeks), "M" (months, as 30 days) or "y" (years, as
+            # 365 days).
+            expires: 5m
+
+            # Whether to forward disallowed and missing resources from this
+            # location to the application.
+            #
+            # Can be true, false or a URI path string.
+            passthru: '/admin/index.php'
+
+            # Deny access to static files in this location.
+            allow: false
+
+            # Rules for specific URI patterns.
+            rules:
+                # Allow access to common static files.
+                '\.(jpe?g|png|gif|svgz?|css|js|map|ico|bmp|eot|woff2?|otf|ttf|mp3)$':
+                    allow: true
+                '^/robots\.txt$':
+                    allow: true
+                '^/sitemap\.xml$':
+                    allow: true
+
+        '/sites/default/files':
+            # Allow access to all files in the public files directory.
+            allow: true
+            expires: 5m
+            passthru: '/admin/index.php'
+            root: 'web/sites/default/files'
+
+            # Do not execute PHP scripts.
+            scripts: false
+
+            rules:
+                # Provide a longer TTL (2 weeks) for aggregated CSS and JS files.
+                '^/sites/default/files/(css|js)':
+                    expires: 2w
+
+# The size of the persistent disk of the application (in MB).
+disk: 2048
+
+# The 'mounts' describe writable, persistent filesystem mounts in the application. The keys are
+# directory paths, relative to the application root. The values are strings such as
+# 'shared:files/NAME', where NAME is just a unique name for the mount.
+mounts:
+    '/web/sites/default/files': 'shared:files/files'
+    '/tmp': 'shared:files/tmp'
+    '/private': 'shared:files/private'
+    '/drush-backups': 'shared:files/drush-backups'
+#    '/tests/codeception/tests/_output': 'shared:files/unit-tests_output'
+
+# The hooks executed at various points in the lifecycle of the application.
+hooks:
+
+    # The deploy hook runs after your application has been deployed and started.
+    deploy: |
+      cd web
+      time drush -y cache-rebuild
+      time drush -y updatedb
+      time drush -y config-import
+      time drush -y entup
+
+# The configuration of scheduled execution.
+crons:
+    # Run cron every hour.
+    drupal:
+        spec: '0 * * * *'
+        cmd: 'cd web ; drush core-cron'
+
+    # Run automatic snapshot creation every 12th hour.
+    snapshot:
+        spec: '1 */12 * * *'
+        cmd: 'if [ "$PLATFORM_BRANCH" = master ]; then platform snapshot:create --yes --no-wait; fi'
+
+    # Make dumps of database and store in ~/drush-backups. Delete old backups.
+    dump_db:
+        spec: '10 */12 * * *'
+        cmd: 'if [ "$PLATFORM_BRANCH" = master ]; then scripts/dump_db.sh; fi'
+
+    # Upload production db dumps to Amazon S3.
+    upload_production_backups:
+        spec: '15 */2 * * *'
+        cmd: 'if [ "$PLATFORM_BRANCH" = master ]; then php scripts/upload_backups.php; fi'

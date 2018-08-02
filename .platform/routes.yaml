@@ -1,0 +1,16 @@
+# Platform.sh routes
+# See https://docs.platform.sh/configuration/routes.html
+
+# Frontend.
+"http://{default}/":
+    type: redirect
+    to: "https://{default}/"
+
+"https://{default}/":
+    type: upstream
+    upstream: "frontend:http"
+
+# Backend.
+"https://{default}/admin/":
+    type: upstream
+    upstream: "backend:http"

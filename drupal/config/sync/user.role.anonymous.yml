@@ -1,0 +1,18 @@
+uuid: 85be1d9b-3787-4cb1-93cd-d243921acd0a
+langcode: en
+status: true
+dependencies: {  }
+id: anonymous
+label: 'Anonymous user'
+weight: 0
+is_admin: false
+permissions:
+  - 'access content'
+  - 'access jsonapi resource list'
+  - 'access openapi api docs'
+  - 'access toolbar'
+  - 'access user profiles'
+  - 'execute graphql requests'
+  - 'issue subrequests'
+  - 'use jsonrpc services'
+  - 'view media'

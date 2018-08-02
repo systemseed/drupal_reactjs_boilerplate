@@ -1,0 +1,6 @@
+# Platform.sh services definition
+# See https://docs.platform.sh/configuration/services.html
+
+mariadb:
+    type: "mysql:10.2"
+    disk: 2048

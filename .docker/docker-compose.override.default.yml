@@ -1,0 +1,36 @@
+version: '3'
+services:
+
+  node:
+    volumes:
+      - ../reactjs:/app
+      # For macOS users (https://wodby.com/stacks/drupal/docs/local/docker-for-mac/)
+      #- ../reactjs:/app:cached
+
+  mariadb:
+    volumes:
+      - ./mysql:/var/lib/mysql
+      # For macOS users (https://wodby.com/stacks/drupal/docs/local/docker-for-mac/)
+      #- ./mysql:/var/lib/mysql:cached
+
+  php:
+    environment:
+      PHP_XDEBUG: 0 # Change to 1 to enable XDebug.
+      PHP_XDEBUG_DEFAULT_ENABLE: 1
+      PHP_XDEBUG_REMOTE_CONNECT_BACK: 0
+      PHP_IDE_CONFIG: serverName=my-ide
+      PHP_XDEBUG_REMOTE_HOST: host.docker.internal
+    volumes:
+      - ../drupal:/var/www/html
+      ## For macOS users (https://wodby.com/stacks/drupal/docs/local/docker-for-mac/)
+      #- ../drupal:/var/www/html:cached
+
+  nginx:
+    #environment:
+      # NGINX_PAGESPEED: "on"
+      # NGINX_DRUPAL_FILE_PROXY_URL: http://example.com
+    volumes:
+      - ../drupal:/var/www/html
+      - ./nginx:/var/www/nginx # Custom nginx config for subfolders Drupal installation.
+      ## For macOS users (https://wodby.com/stacks/drupal/docs/local/docker-for-mac/)
+      #- ../drupal:/var/www/html:cached

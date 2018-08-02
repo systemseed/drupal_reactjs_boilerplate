@@ -1,0 +1,156 @@
+##################
+#
+# Circle CI environment variables used:
+#
+# $PLATFORMSH_PROJECT_NAME - Machine name of a project on Platform.sh. Example: dnrvwqsdwxjry.
+# $PLATFORMSH_CLI_TOKEN - Authentication token of a user from Platform.sh.
+# $HTTP_USERNAME - Username to use for HTTP authentication on non-production environments.
+# $HTTP_PASSWORD - Password to use for HTTP authentication on non-production environments.
+#
+###################
+version: 2
+
+# Default configs for all jobs.
+defaults: &defaults
+  working_directory: ~/systemseed.com
+  docker:
+    - image: circleci/php:7.2-apache-node-browsers
+
+# Step to install Platform.sh. Reusable across different jobs.
+install_platform_cli: &install_platform_cli
+  name: Install and configure Platform.sh CLI
+  command: |
+    curl -sS https://platform.sh/cli/installer | php
+    sudo ln -s ~/.platformsh/bin/platform /usr/local/bin/platform
+    # Add platform.sh remote to git.
+    if ! git config remote.platform.url > /dev/null; then
+      git remote add platform $PLATFORMSH_PROJECT_NAME@git.eu.platform.sh:$PLATFORMSH_PROJECT_NAME.git
+    fi
+    # Avoid dynamic hosts issue for git push to platform.
+    echo "StrictHostKeyChecking no" > ~/.ssh/config
+
+jobs:
+
+  ######################################################
+  #### PREPARE PLATFORM.SH APPLICATION #################
+  ######################################################
+  prepare_application:
+    <<: *defaults
+    steps:
+      - checkout
+
+      - run:
+          <<: *install_platform_cli
+
+      # TODO: Enable when go live.
+      #- run:
+      #    name: Create backup of production database and force push it to S3.
+      #    command: |
+      #      if [ $CIRCLE_BRANCH == "master" ]; then
+      #        platform ssh -A backend -e $CIRCLE_BRANCH "sh scripts/db_dump.sh"
+      #        platform ssh -A backend -e $CIRCLE_BRANCH "php scripts/upload_backups.php" || true
+      #      fi
+
+      # TODO: Enable when go live.
+      #- run:
+      #    name: Make a snapshot on the production before deploy.
+      #    command: |
+      #      if [ $CIRCLE_BRANCH == "master" ]; then
+      #        platform snapshot:create --yes --no-wait
+      #      fi
+
+      - run:
+          name: Push branch changes to platform's git repository
+          command: git push --force platform $CIRCLE_BRANCH
+          no_output_timeout: 20m
+
+      - run:
+          name: Build a new environment on platform.sh using db/files from the MASTER environment
+          command: platform environment:activate -y --parent=master $CIRCLE_BRANCH
+
+      - run:
+          name: Restrict access to the test environments via http
+          command: |
+            if [ $CIRCLE_BRANCH != "master" ]; then
+              platform vset env:HTTP_AUTH_USER $HTTP_USERNAME
+              platform vset env:HTTP_AUTH_PASS $HTTP_PASSWORD
+            fi
+
+      - run:
+          name: Clone database & files for stage branch or if [db sync] is presented in the commit message.
+          shell: /bin/bash
+          command: |
+            git log --format=%B -n 1 $CIRCLE_SHA1 | grep "\[db sync\]"
+            if [ $? -ne 1 ] || [ $CIRCLE_BRANCH == "stage" ]; then
+              platform sync data -y
+            fi
+
+  ###########################################
+  ################# RUN TESTS ###############
+  ###########################################
+  run_tests:
+    <<: *defaults
+    steps:
+      - checkout
+
+      - run:
+          <<: *install_platform_cli
+
+      - run:
+          name: Install CodeSnippet packages
+          command: composer require drupal/coder:^8.2
+
+      - run:
+          name: Run CodeSniffer for the Custom Drupal code.
+          command: |
+            ./vendor/bin/phpcs --config-set installed_paths ../../drupal/coder/coder_sniffer
+            ./vendor/bin/phpcs --config-set show_progress 1
+            ./vendor/bin/phpcs --colors --warning-severity=0 --standard=Drupal ./drupal/web/modules/custom
+
+      - run:
+          name: Run ESLint for the React application.
+          command: platform ssh -A frontend "yarn eslint"
+
+  ######################################
+  ###### CHECK SECURITY UPDATES ########
+  ######################################
+  check_security_updates:
+    <<: *defaults
+    steps:
+      - checkout
+
+      - run:
+          <<: *install_platform_cli
+
+      - run:
+          name: Check security updates for Drupal backend
+          # Connect via SSH and output result of drush pm-updatestatus as a list | count output lines | make sure there are exactly zero lines which means "No security updates found".
+          command: platform ssh -q -A backend "drush ups -r web --security-only --pipe" | wc -l | grep -q "\b0$"
+
+##########################################################
+######## WORKFLOWS. ORCHESTRATING THE CI JOBS  ###########
+##########################################################
+workflows:
+  version: 2
+  workflow:
+    jobs:
+
+      # A job which pushes changes to platform.sh and executes mandatory
+      # operations on the platform.sh to get the site updated.
+      - prepare_application
+
+      # Executes tests on recently created environment at Platform.sh.
+      - run_tests:
+          requires:
+            - prepare_application
+
+  # Run security checks for the project every Thursday at 12am.
+  security_updates_scheduled:
+    jobs:
+      - check_security_updates
+    triggers:
+      - schedule:
+          cron: "0 0 * * 4"
+          filters:
+            branches:
+              only: master
