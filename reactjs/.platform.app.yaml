@@ -33,5 +33,8 @@ hooks:
     yarn run build
 
 mounts:
-  # Make whole build folder writeble for build scripts purposes.
+  # Make a new writable folder for pm2 to put its own stuff there.
   '/run': 'shared:files/run'
+  # Make Next.js build folder writable to rewrite backend URL in the
+  # built packages upon the deploy phase.
+  '/.next/bundles/pages': 'shared:files/.next'
