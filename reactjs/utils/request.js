@@ -3,9 +3,19 @@ import superagentDefaults from 'superagent-defaults';
 import superagentJsonapify from 'superagent-jsonapify';
 import superagentPrefix from 'superagent-prefix';
 
-// Client application can always find backend under /admin url, while
-// node.js server should have variable defined fo this.
-const backendUrl = typeof window === 'undefined' ? process.env.BACKEND_URL : '/admin';
+// Define variable for Drupal domain to interact with from the frontend.
+let backendUrl = '';
+
+// If the application is running on platform.sh, then we need to assign
+// a placeholder value as the backend url to get it replaced during the
+// deploy phase (see .platform.app.yaml hooks).
+if (process.env.PLATFORM_PROJECT) {
+  backendUrl = 'http://platformsh.placeholder';
+} else {
+  // Otherwise local environment should always have link to the backend.
+  backendUrl = `http://${process.env.BACKEND_HOST}`;
+}
+
 const prefix = superagentPrefix(backendUrl);
 
 // Get superagent object & make it ready to set some default values.

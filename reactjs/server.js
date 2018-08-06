@@ -6,22 +6,8 @@ const globImporter = require('node-sass-glob-importer');
 const dotenv = require('dotenv');
 const routes = require('./routes');
 
-// For Platform.sh we need to find the backend url in mapped routes.
-if (process.env.PLATFORM_PROJECT) {
-  // Load platform.sh routes config.
-  // eslint-disable-next-line no-buffer-constructor
-  const plaformshRoutes = JSON.parse(new Buffer(process.env.PLATFORM_ROUTES, 'base64').toString());
-  for (const url in plaformshRoutes) { // eslint-disable-line no-restricted-syntax, guard-for-in
-    const route = plaformshRoutes[url];
-    if (route.original_url === 'https://{default}/admin/') {
-      // Remove "/" from the end of the url.
-      process.env.BACKEND_URL = url.substring(0, url.length - 1);
-    }
-  }
-} else {
-  // Import variables (including BACKEND_URL) from local .env file.
-  dotenv.config();
-}
+// Import variables (including BACKEND_HOST) from local .env file.
+dotenv.config();
 
 const port = process.env.PORT || 3000;
 const dev = process.env.NODE_ENV !== 'production';

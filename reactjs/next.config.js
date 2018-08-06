@@ -1,4 +1,5 @@
 const globImporter = require('node-sass-glob-importer');
+const webpack = require('webpack');
 
 module.exports = {
   webpack: (config) => {
@@ -28,6 +29,13 @@ module.exports = {
         ],
       },
     );
+
+    // Make environment variables (.env or on platform.sh) available on the
+    // client applications. Otherwise set default values.
+    config.plugins.push(new webpack.EnvironmentPlugin({
+      PLATFORM_PROJECT: '',
+      BACKEND_HOST: '',
+    }));
 
     return config;
   },

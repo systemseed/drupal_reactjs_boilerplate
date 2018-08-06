@@ -7,7 +7,7 @@ services:
     labels:
       - 'traefik.backend=node'
       - 'traefik.port=3000'
-      - 'traefik.frontend.rule=Host:app.${PROJECT_BASE_URL}'
+      - 'traefik.frontend.rule=Host:${FRONTEND_HOST}'
     expose:
       - "3000"
     command: yarn start:dev
@@ -42,11 +42,10 @@ services:
       NGINX_ERROR_LOG_LEVEL: debug
       NGINX_BACKEND_HOST: php
       NGINX_SERVER_ROOT: /var/www/html/web
-      NGINX_SERVER_EXTRA_CONF_FILEPATH: /var/www/nginx/drupal.conf
     labels:
       - 'traefik.backend=nginx'
       - 'traefik.port=80'
-      - 'traefik.frontend.rule=Host:app.${PROJECT_BASE_URL};PathPrefix:/admin'
+      - 'traefik.frontend.rule=Host:${BACKEND_HOST}'
 
   pma:
     image: phpmyadmin/phpmyadmin
@@ -59,14 +58,14 @@ services:
     labels:
       - 'traefik.backend=pma'
       - 'traefik.port=80'
-      - 'traefik.frontend.rule=Host:pma.${PROJECT_BASE_URL}'
+      - 'traefik.frontend.rule=Host:pma.${BACKEND_HOST}'
 
   mailhog:
     image: mailhog/mailhog
     labels:
       - 'traefik.backend=mailhog'
       - 'traefik.port=8025'
-      - 'traefik.frontend.rule=Host:mailhog.${PROJECT_BASE_URL}'
+      - 'traefik.frontend.rule=Host:mailhog.${BACKEND_HOST}'
 
   traefik:
     image: traefik
@@ -79,4 +78,5 @@ services:
     networks:
       default:
         aliases:
-          - app.$PROJECT_BASE_URL
+          - $FRONTEND_HOST
+          - $BACKEND_HOST

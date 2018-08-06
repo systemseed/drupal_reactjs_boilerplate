@@ -11,12 +11,12 @@
  
 # Access applications
  
-| URL                                | Name                |
-| -----------------------------------| ------------------- |
-| http://app.docker.localhost        | ReactJS application |
-| http://app.docker.localhost/admin/ | Drupal 8            |
-| http://pma.docker.localhost        | PhpMyAdmin          |
-| http://mailhog.docker.localhost    | Mailhog             |
+| URL                                     | Name                |
+| ----------------------------------------| ------------------- |
+| http://app.docker.localhost             | ReactJS application |
+| http://drupal.docker.localhost          | Drupal 8            |
+| http://pma.drupal.docker.localhost      | PhpMyAdmin          |
+| http://mailhog.drupal.docker.localhost  | Mailhog             |
  
 # What is included into this boilerplate?
  

@@ -3,13 +3,13 @@
 # Make sure the local file with docker-compose overrides exist.
 $(shell ! test -e \.\/.docker\/docker-compose\.override\.yml && cat \.\/.docker\/docker-compose\.override\.default\.yml > \.\/.docker\/docker-compose\.override\.yml)
 
-# Create a .env file if not exists and include default env variables.
+# Create a .env file if not exists with default env variables.
 $(shell ! test -e \.env && cat \.env.default > \.env)
 
-# Create a reactjs/.env.local file if not exists and include default env variables.
-$(shell ! test -e \.\/reactjs\/\.env && cat \.\/reactjs\/\.env\.default > \.\/reactjs\/\.env)
+# Create a reactjs/.env file if not exists with default env variables.
+$(shell ! test -e \.\/reactjs\/\.env && cat \.env.default > \.\/reactjs\/\.env)
 
-# Make all variables from the file available here.
+# Make all variables from the environment file available here.
 include .env
 
 # Define two users for with different permissions within the container.

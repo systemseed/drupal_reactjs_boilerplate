@@ -13,7 +13,6 @@ $settings['file_scan_ignore_directories'] = [
   'bower_components',
 ];
 
-$settings['hash_salt'] = 'oV0pWulyqPl8WllF3KL2c-eksukEt7ARWQy9l-S8GQdWEiIpShc9q8hJ3jeCx9hM8RCpGPZd2w';
 $settings['install_profile'] = 'contenta_jsonapi';
 $config_directories[CONFIG_SYNC_DIRECTORY] = '../config/sync';
 

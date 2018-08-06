@@ -24,14 +24,7 @@ $config['smtp.settings']['smtp_on'] = FALSE;
 // Enable private file system locally.
 $settings['file_private_path'] = DRUPAL_ROOT . '/sites/default/files/private';
 
-// Support of /admin/ subpath.
-if (!empty($GLOBALS['request'])) {
-  $is_backend_request = substr($GLOBALS['request']->server->get('REQUEST_URI'), 0, 7) === '/admin/';
-  if ($is_backend_request) {
-    $scriptName = $GLOBALS['request']->server->get('SCRIPT_NAME');
-    $GLOBALS['request']->server->set('SCRIPT_NAME', '/admin' . $scriptName);
-  }
-}
+$settings['hash_salt'] = '';
 
 $databases['default']['default'] = [
   'database' => 'drupal',

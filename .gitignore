@@ -7,3 +7,6 @@
 
 # Docker mysql storage
 .docker/mysql
+
+# Platform's cli generated files
+.platform/local

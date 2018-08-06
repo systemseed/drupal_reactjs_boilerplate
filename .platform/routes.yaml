@@ -11,6 +11,6 @@
     upstream: "frontend:http"
 
 # Backend.
-"https://{default}/admin/":
+"https://admin.{default}/":
     type: upstream
     upstream: "backend:http"

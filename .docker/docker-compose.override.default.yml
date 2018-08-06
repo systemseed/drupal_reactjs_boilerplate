@@ -25,4 +25,3 @@ services:
       # NGINX_DRUPAL_FILE_PROXY_URL: http://example.com
     volumes:
       - ../drupal:/var/www/html:cached
-      - ./nginx:/var/www/nginx:cached # Custom nginx config for subfolders Drupal installation.

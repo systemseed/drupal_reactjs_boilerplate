@@ -31,10 +31,28 @@ hooks:
   build: |
     yarn install
     yarn run build
+    # Move built Next.js application to a temporary folder, because on mount of
+    # /.next folder from publicly shared files, the built .next application will be overriden.
+    cp -rf .next/ .next_tmp/
+  deploy: |
+    # When deploy hook is triggered, the .next folder is already mounted from shared files folder,
+    # so we need to make sure it's empty, and then move built Next.js application to it.
+    rm -rf .next/*
+    cp -rf .next_tmp/* .next/
+
+    # Here we search for backend url placeholder in the application code and replace it.
+    # We do it in the deploy hook because Platform.sh's routes are not available during the build phase,
+    # while the backend url value has to be available in the application which was already built.
+    # That's why we had to make /.next folder writable (mounted to shared files folder).
+    SEARCH_VALUE="http://platformsh.placeholder"
+    REPLACE_VALUE=$(node .platform.deploy.js)
+    echo "Backend URL is $REPLACE_VALUE"
+    find .next -type f -name "*.js" -print0 | xargs -0 sed -i "s~$SEARCH_VALUE~$REPLACE_VALUE~"
 
 mounts:
-  # Make a new writable folder for pm2 to put its own stuff there.
+  # Make whole build folder writable for build scripts purposes.
   '/run': 'shared:files/run'
   # Make Next.js build folder writable to rewrite backend URL in the
-  # built packages upon the deploy phase.
-  '/.next/bundles/pages': 'shared:files/.next'
+  # built application upon the deploy phase. This is necessary because
+  # Platform's urls are not available during build phase.
+  '/.next': 'shared:files/.next'
