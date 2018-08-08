@@ -12,7 +12,7 @@ version: 2
 
 # Default configs for all jobs.
 defaults: &defaults
-  working_directory: ~/systemseed.com
+  working_directory: ~/drupal_reactjs_boilerplate
   docker:
     - image: circleci/php:7.2-apache-node-browsers
 
