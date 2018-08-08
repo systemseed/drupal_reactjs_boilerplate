@@ -47,10 +47,6 @@
 - Configured Drupal installation to work with React.js application
 - Nice admin theme
 - Other features of Contenta CMS out of the box. You should really [check them out](http://contentacms.readthedocs.io/en/latest/)! 
- 
-# Mac OS Docker configs
-
-By default Docker is configured to run on all environments. Mac has issues with files sync performance by default. So to get it fixed, open `./docker/docker-compose.override.yml` file and follow the instructions to improve file sync performance. When it's done, just run `make restart`.
 
 # Command list
 
