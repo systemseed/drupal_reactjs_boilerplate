@@ -1,8 +1,3 @@
 User-agent: *
 Crawl-delay: 10
 Allow: /
-Allow: /admin/sites/*/files/*.gif
-Allow: /admin/sites/*/files/*.jpg
-Allow: /admin/sites/*/files/*.jpeg
-Allow: /admin/sites/*/files/*.png
-Disallow: /admin/
