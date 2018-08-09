@@ -1,13 +1,13 @@
 .PHONY: default up stop restart down install lint drush yarn
 
 # Make sure the local file with docker-compose overrides exist.
-$(shell ! test -e \.\/.docker\/docker-compose\.override\.yml && cat \.\/.docker\/docker-compose\.override\.default\.yml > \.\/.docker\/docker-compose\.override\.yml)
+$(shell cp -n \.\/\.docker\/docker-compose\.override\.default\.yml \.\/\.docker\/docker-compose\.override\.yml)
 
 # Create a .env file if not exists with default env variables.
-$(shell ! test -e \.env && cat \.env.default > \.env)
+$(shell cp -n \.env\.default \.env)
 
 # Create a reactjs/.env file if not exists with default env variables.
-$(shell ! test -e \.\/reactjs\/\.env && cat \.env.default > \.\/reactjs\/\.env)
+$(shell cp -n \.env\.default \.\/reactjs\/\.env)
 
 # Make all variables from the environment file available here.
 include .env
