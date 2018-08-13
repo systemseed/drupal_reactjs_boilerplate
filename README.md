@@ -1,14 +1,19 @@
 # Installation
 
-1. Clone git repo locally, then
+1. Project setup is Mac by default, so if you are running MacOS then
 
     ```
     cd drupal_reactjs_boilerplate
     make install
     ```
 
-2. That's it, the app is ready!
- 
+2. If you happen to run Linux then
+    - run `make stop` command to create local environment files
+    - edit the created .env file to change the PHP_TAG value to the Linux one
+    - run `make install`
+
+3. That's it, the app is ready!
+
 # Access applications
  
 | URL                                     | Name                |
