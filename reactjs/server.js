@@ -6,7 +6,7 @@ const globImporter = require('node-sass-glob-importer');
 const dotenv = require('dotenv');
 const routes = require('./routes');
 
-// Import variables (including BACKEND_HOST) from local .env file.
+// Import variables from local .env file.
 dotenv.config();
 
 const port = process.env.PORT || 3000;

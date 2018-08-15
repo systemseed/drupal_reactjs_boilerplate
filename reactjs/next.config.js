@@ -1,7 +1,12 @@
 const globImporter = require('node-sass-glob-importer');
-const webpack = require('webpack');
+const nextRuntimeDotenv = require('next-runtime-dotenv');
 
-module.exports = {
+const withConfig = nextRuntimeDotenv({
+  public: ['BACKEND_URL'],
+  server: ['HTTP_AUTH_USER', 'HTTP_AUTH_PASS'],
+});
+
+module.exports = withConfig({
   webpack: (config) => {
     config.module.rules.push(
       {
@@ -30,13 +35,6 @@ module.exports = {
       },
     );
 
-    // Make environment variables (.env or on platform.sh) available on the
-    // client applications. Otherwise set default values.
-    config.plugins.push(new webpack.EnvironmentPlugin({
-      PLATFORM_PROJECT: '',
-      BACKEND_HOST: '',
-    }));
-
     return config;
   },
-};
+});

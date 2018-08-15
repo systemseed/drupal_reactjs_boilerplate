@@ -31,7 +31,7 @@ class HomePage extends React.Component {
             Home page is working!<br />
             List of users from Drupal:<br />
             <ul>
-              {users.map(user => <li>{user.name} (id: {user.id})</li>)}
+              {users.map(user => <li key={user.id}>{user.name} (id: {user.id})</li>)}
             </ul>
           </Col>
         </Row>

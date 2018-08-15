@@ -69,6 +69,13 @@ jobs:
           command: platform environment:activate -y --parent=master $CIRCLE_BRANCH
 
       - run:
+          name: Expose backend URL via environment variable.
+            # Get admin url from Platform.sh.
+            BACKEND_URL=$(platform route:get -P url https://admin.\{default\}/)
+            # Set variable without trailing / symbol.
+            platform vset env:BACKEND_URL ${BACKEND_URL%/}
+
+      - run:
           name: Restrict access to the test environments via http
           command: |
             if [ $CIRCLE_BRANCH != "master" ]; then

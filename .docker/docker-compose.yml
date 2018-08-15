@@ -4,6 +4,8 @@ services:
   node:
     image: wodby/node:$NODE_TAG
     working_dir: /app
+    environment:
+      BACKEND_URL: "http://${BACKEND_HOST}"
     labels:
       - 'traefik.backend=node'
       - 'traefik.port=3000'
