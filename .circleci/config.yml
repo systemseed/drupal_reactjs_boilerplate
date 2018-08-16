@@ -23,9 +23,7 @@ install_platform_cli: &install_platform_cli
     curl -sS https://platform.sh/cli/installer | php
     sudo ln -s ~/.platformsh/bin/platform /usr/local/bin/platform
     # Add platform.sh remote to git.
-    if ! git config remote.platform.url > /dev/null; then
-      platform project:set-remote $PLATFORMSH_PROJECT_NAME
-    fi
+    platform project:set-remote $PLATFORMSH_PROJECT_NAME
     # Avoid dynamic hosts issue for git push to platform.
     echo "StrictHostKeyChecking no" > ~/.ssh/config
 jobs:
