@@ -3,7 +3,9 @@
 # Circle CI environment variables used:
 #
 # $PLATFORMSH_PROJECT_NAME - Machine name of a project on Platform.sh. Example: dnrvwqsdwxjry.
-# $PLATFORMSH_CLI_TOKEN - Authentication token of a user from Platform.sh.
+# $PLATFORMSH_CLI_TOKEN - Authentication token of a user from Platform.sh. It is not used in this
+#   config file explicitly, but it provides automatic authentication of Platform's CLI.
+#   @see https://docs.platform.sh/gettingstarted/cli/api-tokens.html for more info.
 # $HTTP_USERNAME - Username to use for HTTP authentication on non-production environments.
 # $HTTP_PASSWORD - Password to use for HTTP authentication on non-production environments.
 #
