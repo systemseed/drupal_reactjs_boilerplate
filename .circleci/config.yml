@@ -60,7 +60,7 @@ jobs:
 
       - run:
           name: Push branch changes to platform's git repository
-          command: git push --force platform $CIRCLE_BRANCH
+          command: platform push --force --yes $CIRCLE_BRANCH
           no_output_timeout: 20m
 
       - run:
