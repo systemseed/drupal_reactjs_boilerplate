@@ -11,6 +11,11 @@ if (PHP_SAPI == 'cli') {
   return;
 }
 
+// The first cross origins request may bypass http authentication.
+if ($GLOBALS['request']->server->get('REQUEST_METHOD') === 'OPTIONS') {
+  return;
+}
+
 // If the request includes custom http-auth header, then validate it.
 // This header was introduced to send requests from node.js server to the
 // backend without http authentication.
