@@ -8,7 +8,7 @@
 // Configure the database.
 if (isset($_ENV['PLATFORM_RELATIONSHIPS'])) {
   $relationships = json_decode(base64_decode($_ENV['PLATFORM_RELATIONSHIPS']), TRUE);
-  if (empty($databases['default']['default']) && !empty($relationships['database'])) {
+  if (!empty($relationships['database'])) {
     foreach ($relationships['database'] as $endpoint) {
       $database = [
         'driver' => $endpoint['scheme'],
@@ -115,6 +115,6 @@ if (isset($_ENV['PLATFORM_VARIABLES'])) {
 
 // Set the project-specific entropy value, used for generating one-time
 // keys and such.
-if (isset($_ENV['PLATFORM_PROJECT_ENTROPY']) && empty($settings['hash_salt'])) {
+if (isset($_ENV['PLATFORM_PROJECT_ENTROPY'])) {
   $settings['hash_salt'] = $_ENV['PLATFORM_PROJECT_ENTROPY'];
 }
