@@ -1,5 +1,6 @@
 const compression = require('compression');
 const express = require('express');
+const basicAuth = require('express-basic-auth');
 const nextjs = require('next');
 const sass = require('node-sass');
 const globImporter = require('node-sass-glob-importer');
@@ -18,6 +19,19 @@ app.prepare()
   .then(() => {
     // Initialize express.js server.
     const expressServer = express();
+
+    // Make sure we enable http auth only on platform.sh dev branches.
+    if (process.env.PLATFORM_BRANCH && process.env.PLATFORM_BRANCH !== 'master') {
+      // Make sure that we do have http user & password set in variables.
+      if (process.env.HTTP_AUTH_USER && process.env.HTTP_AUTH_PASS) {
+        expressServer.use(basicAuth({
+          users: {
+            [process.env.HTTP_AUTH_USER]: process.env.HTTP_AUTH_PASS,
+          },
+          challenge: true,
+        }));
+      }
+    }
 
     // Serve gzipped content where possible.
     expressServer.use(compression());
