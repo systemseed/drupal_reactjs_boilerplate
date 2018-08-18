@@ -1,4 +1,4 @@
-.PHONY: default up stop restart down install lint drush yarn
+.PHONY: default up stop restart down install lint drush composer sh yarn
 
 # Make sure the local file with docker-compose overrides exist.
 $(shell cp -n \.\/\.docker\/docker-compose\.override\.default\.yml \.\/\.docker\/docker-compose\.override\.yml)
@@ -63,6 +63,16 @@ drush:
 	@echo "${YELLOW}Running Drush command...${COLOR_END}"
 	$(eval ARGS := $(filter-out $@,$(MAKECMDGOALS)))
 	$(call docker-drupal, drush $(ARGS) --root=web -y)
+
+composer:
+	@echo "${YELLOW}Running Composer command...${COLOR_END}"
+	$(eval ARGS := $(filter-out $@,$(MAKECMDGOALS)))
+	$(call docker-drupal, composer $(ARGS) -vvv)
+
+sh:
+	@echo "${YELLOW}Opening shell inside of php container...${COLOR_END}"
+	$(eval ARGS := $(filter-out $@,$(MAKECMDGOALS)))
+	$(call docker-drupal, sh $(ARGS))
 
 yarn:
 	@echo "${YELLOW}Running yarn command...${COLOR_END}"
