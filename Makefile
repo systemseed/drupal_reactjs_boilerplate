@@ -14,8 +14,8 @@ include .env
 
 # Define two users for with different permissions within the container.
 # docker-drupal is applicable only for php containers.
-docker-drupal = docker-compose exec -T --user=82:82 php time ${1}
-docker = docker-compose exec -T php time ${1}
+docker-drupal = docker-compose exec -T --user=82:82 php ${1}
+docker = docker-compose exec -T php ${1}
 
 # Defines colors for echo, eg: @echo "${GREEN}Hello World${COLOR_END}". More colors: https://stackoverflow.com/a/43670199/3090657
 YELLOW=\033[0;33m
@@ -72,7 +72,7 @@ composer:
 sh:
 	@echo "${YELLOW}Opening shell inside of php container...${COLOR_END}"
 	$(eval ARGS := $(filter-out $@,$(MAKECMDGOALS)))
-	$(call docker-drupal, sh $(ARGS))
+	docker-compose exec php sh $(ARGS)
 
 yarn:
 	@echo "${YELLOW}Running yarn command...${COLOR_END}"
