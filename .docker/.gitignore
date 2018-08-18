@@ -1,0 +1,6 @@
+# Docker mysql storage.
+/mysql/*
+!/mysql/.gitkeep
+
+# Environment overrides.
+/docker-compose.override.yml

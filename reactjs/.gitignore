@@ -2,8 +2,8 @@
 yarn-error.log
 
 # Next.js / React folders.
-node_modules
+/node_modules
 .next
 
-# Local .env file
-.env
+# Environment overrides.
+/.env
