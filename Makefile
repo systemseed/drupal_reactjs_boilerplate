@@ -1,4 +1,4 @@
-.PHONY: default up stop restart down install lint drush yarn
+.PHONY: default up stop restart down install lint drush composer sh yarn
 
 # Make sure the local file with docker-compose overrides exist.
 $(shell cp -n \.\/\.docker\/docker-compose\.override\.default\.yml \.\/\.docker\/docker-compose\.override\.yml)
@@ -14,8 +14,8 @@ include .env
 
 # Define two users for with different permissions within the container.
 # docker-drupal is applicable only for php containers.
-docker-drupal = docker-compose exec -T --user=82:82 php time ${1}
-docker = docker-compose exec -T php time ${1}
+docker-drupal = docker-compose exec -T --user=82:82 php ${1}
+docker = docker-compose exec -T php ${1}
 
 # Defines colors for echo, eg: @echo "${GREEN}Hello World${COLOR_END}". More colors: https://stackoverflow.com/a/43670199/3090657
 YELLOW=\033[0;33m
@@ -63,6 +63,16 @@ drush:
 	@echo "${YELLOW}Running Drush command...${COLOR_END}"
 	$(eval ARGS := $(filter-out $@,$(MAKECMDGOALS)))
 	$(call docker-drupal, drush $(ARGS) --root=web -y)
+
+composer:
+	@echo "${YELLOW}Running Composer command...${COLOR_END}"
+	$(eval ARGS := $(filter-out $@,$(MAKECMDGOALS)))
+	$(call docker-drupal, composer $(ARGS) -vvv)
+
+sh:
+	@echo "${YELLOW}Opening shell inside of php container...${COLOR_END}"
+	$(eval ARGS := $(filter-out $@,$(MAKECMDGOALS)))
+	docker-compose exec php sh $(ARGS)
 
 yarn:
 	@echo "${YELLOW}Running yarn command...${COLOR_END}"
