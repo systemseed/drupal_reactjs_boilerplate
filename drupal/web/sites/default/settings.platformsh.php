@@ -1,8 +1,10 @@
 <?php
+
 /**
  * @file
  * Platform.sh settings.
  */
+
 // Configure the database.
 if (isset($_ENV['PLATFORM_RELATIONSHIPS'])) {
   $relationships = json_decode(base64_decode($_ENV['PLATFORM_RELATIONSHIPS']), TRUE);
@@ -27,6 +29,7 @@ if (isset($_ENV['PLATFORM_RELATIONSHIPS'])) {
       }
     }
   }
+
   // @see platform.sh solr documentation: https://docs.platform.sh/frameworks/drupal8/solr.html
   if (!empty($relationships['solr'][0])) {
     // Edit this value to use the the machine name of the Solr server in Drupal
@@ -46,6 +49,7 @@ if (isset($_ENV['PLATFORM_RELATIONSHIPS'])) {
     $config['search_api.server.' . $solr_server_name]['backend_config']['connector_config']['port'] = $solr['port'];
   }
 }
+
 if (isset($_ENV['PLATFORM_APP_DIR'])) {
   // Configure private and temporary file paths.
   if (!isset($settings['file_private_path'])) {
@@ -62,6 +66,7 @@ if (isset($_ENV['PLATFORM_APP_DIR'])) {
     $settings['php_storage']['twig']['directory'] = $settings['file_private_path'];
   }
 }
+
 // Set trusted hosts based on Platform.sh routes.
 if (isset($_ENV['PLATFORM_ROUTES']) && !isset($settings['trusted_host_patterns'])) {
   $routes = json_decode(base64_decode($_ENV['PLATFORM_ROUTES']), TRUE);
@@ -78,6 +83,7 @@ if (isset($_ENV['PLATFORM_ROUTES']) && !isset($settings['trusted_host_patterns']
   }
   $settings['trusted_host_patterns'] = array_unique($settings['trusted_host_patterns']);
 }
+
 // Import variables prefixed with 'd8settings:' into $settings and 'd8config:'
 // into $config.
 if (isset($_ENV['PLATFORM_VARIABLES'])) {
@@ -106,6 +112,7 @@ if (isset($_ENV['PLATFORM_VARIABLES'])) {
     }
   }
 }
+
 // Set the project-specific entropy value, used for generating one-time
 // keys and such.
 if (isset($_ENV['PLATFORM_PROJECT_ENTROPY'])) {
