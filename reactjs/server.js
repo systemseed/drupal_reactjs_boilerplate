@@ -1,5 +1,6 @@
 const compression = require('compression');
 const express = require('express');
+const basicAuth = require('express-basic-auth');
 const nextjs = require('next');
 const sass = require('node-sass');
 const globImporter = require('node-sass-glob-importer');
