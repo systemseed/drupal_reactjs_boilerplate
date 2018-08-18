@@ -2,7 +2,7 @@
 #
 # Circle CI environment variables used:
 #
-# $PLATFORMSH_PROJECT_NAME - Machine name of a project on Platform.sh. Example: dnrvwqsdwxjry.
+# $PLATFORMSH_PROJECT_ID - Machine name of a project on Platform.sh. Example: dnrvwqsdwxjry.
 # $PLATFORMSH_CLI_TOKEN - Authentication token of a user from Platform.sh. It is not used in this
 #   config file explicitly, but it provides automatic authentication of Platform's CLI.
 #   @see https://docs.platform.sh/gettingstarted/cli/api-tokens.html for more info.
@@ -25,7 +25,7 @@ install_platform_cli: &install_platform_cli
     curl -sS https://platform.sh/cli/installer | php
     sudo ln -s ~/.platformsh/bin/platform /usr/local/bin/platform
     # Add platform.sh remote to git.
-    platform project:set-remote $PLATFORMSH_PROJECT_NAME
+    platform project:set-remote $PLATFORMSH_PROJECT_ID
     # Avoid dynamic hosts issue for git push to platform.
     echo "StrictHostKeyChecking no" > ~/.ssh/config
 jobs:
