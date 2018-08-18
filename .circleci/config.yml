@@ -23,12 +23,9 @@ install_platform_cli: &install_platform_cli
     curl -sS https://platform.sh/cli/installer | php
     sudo ln -s ~/.platformsh/bin/platform /usr/local/bin/platform
     # Add platform.sh remote to git.
-    if ! git config remote.platform.url > /dev/null; then
-      git remote add platform $PLATFORMSH_PROJECT_NAME@git.eu.platform.sh:$PLATFORMSH_PROJECT_NAME.git
-    fi
+    platform project:set-remote $PLATFORMSH_PROJECT_NAME
     # Avoid dynamic hosts issue for git push to platform.
     echo "StrictHostKeyChecking no" > ~/.ssh/config
-
 jobs:
 
   ######################################################
@@ -67,6 +64,14 @@ jobs:
       - run:
           name: Build a new environment on platform.sh using db/files from the MASTER environment
           command: platform environment:activate -y --parent=master $CIRCLE_BRANCH
+
+      - run:
+          name: Expose backend URL via environment variable.
+          command: |
+            # Get admin url from Platform.sh.
+            BACKEND_URL=$(platform route:get -P url https://admin.\{default\}/)
+            # Set variable without trailing / symbol.
+            platform vset env:BACKEND_URL ${BACKEND_URL%/}
 
       - run:
           name: Restrict access to the test environments via http

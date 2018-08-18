@@ -11,6 +11,7 @@
     "next-redux-saga": "^3.0.0-beta.1",
     "next-redux-wrapper": "^2.0.0",
     "next-routes": "^1.4.2",
+    "next-runtime-dotenv": "^1.0.1",
     "node-sass": "^4.9.2",
     "node-sass-glob-importer": "^5.2.0",
     "nprogress": "^0.2.0",
