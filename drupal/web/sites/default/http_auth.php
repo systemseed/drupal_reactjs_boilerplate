@@ -31,17 +31,16 @@ if (!empty($http_auth)) {
 // so we remove them for all internal requests within the site.
 $referer = $GLOBALS['request']->server->get('HTTP_REFERER');
 if (!empty($referer) && !empty($_ENV['PLATFORM_ROUTES'])) {
-  $referer_url = parse_url($referer);
   $frontend_url = '';
 
   $platform_routes = json_decode(base64_decode($_ENV['PLATFORM_ROUTES']), TRUE);
   foreach ($platform_routes as $url => $route) {
     if ($route['original_url'] === 'https://{default}/') {
-      $frontend_url = rtrim($url, '/');
+      $frontend_url = $url;
     }
   }
 
-  if ($referer_url['host'] == $frontend_url) {
+  if ($referer == $frontend_url) {
     return;
   }
 }
