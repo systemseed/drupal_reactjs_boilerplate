@@ -23,16 +23,3 @@ $config['smtp.settings']['smtp_on'] = FALSE;
 
 // Enable private file system locally.
 $settings['file_private_path'] = DRUPAL_ROOT . '/sites/default/files/private';
-
-$settings['hash_salt'] = '';
-
-$databases['default']['default'] = [
-  'database' => 'drupal',
-  'username' => 'drupal',
-  'password' => 'drupal',
-  'host' => 'mariadb',
-  'port' => '3306',
-  'driver' => 'mysql',
-  'prefix' => '',
-  'collation' => 'utf8mb4_general_ci',
-];
