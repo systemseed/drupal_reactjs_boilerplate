@@ -1,9 +1,14 @@
 {
-    "name": "contentacms/contenta-jsonapi-project",
-    "description": "Project template for ",
+    "name": "systemseed/drupal_reactjs_boilerplate",
+    "description": "Boilerplate for headless Drupal / React.js",
     "type": "project",
     "license": "GPL-2.0-or-later",
     "authors": [
+      {
+        "name": "SystemSeed",
+        "homepage": "https://systemseed.com",
+        "role": "Company"
+      }
     ],
     "repositories": [
         {
