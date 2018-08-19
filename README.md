@@ -7,9 +7,9 @@
     make install
     ```
 
-2. If you happen to run Linux then
-    - run `make stop` command to create local environment files
-    - edit the created .env file to change the PHP_TAG value to the Linux one
+2. If you run Linux then
+    - run `make prepare` command to create local environment files
+    - edit the created `.env` file in the root of the project and uncomment `PHP_TAG` version for Linux
     - run `make install`
 
 3. That's it, the app is ready!
