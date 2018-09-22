@@ -3,9 +3,11 @@ services:
 
   node:
     image: wodby/node:$NODE_TAG
+    container_name: "${PROJECT_NAME}_node"
     working_dir: /app
     environment:
-      BACKEND_URL: "http://${BACKEND_HOST}"
+      BACKEND_URL: ${BACKEND_URL}
+      DEBUG: ${NODE_DEBUG}
     labels:
       - 'traefik.backend=node'
       - 'traefik.port=3000'
@@ -16,6 +18,7 @@ services:
 
   mariadb:
     image: wodby/mariadb:$MARIADB_TAG
+    container_name: "${PROJECT_NAME}_mariadb"
     stop_grace_period: 30s
     environment:
       MYSQL_ROOT_PASSWORD: $DB_ROOT_PASSWORD
@@ -25,6 +28,7 @@ services:
 
   php:
     image: wodby/drupal-php:$PHP_TAG
+    container_name: "${PROJECT_NAME}_php"
     depends_on:
       - mariadb
     environment:
@@ -37,6 +41,7 @@ services:
 
   nginx:
     image: wodby/nginx:$NGINX_TAG
+    container_name: "${PROJECT_NAME}_nginx"
     depends_on:
       - php
     environment:
@@ -50,29 +55,9 @@ services:
       - 'traefik.port=80'
       - 'traefik.frontend.rule=Host:${BACKEND_HOST}'
 
-  pma:
-    image: phpmyadmin/phpmyadmin
-    environment:
-      PMA_HOST: $DB_HOST
-      PMA_USER: $DB_USER
-      PMA_PASSWORD: $DB_PASSWORD
-      PHP_UPLOAD_MAX_FILESIZE: 1G
-      PHP_MAX_INPUT_VARS: 1G
-    labels:
-      - 'traefik.backend=pma'
-      - 'traefik.port=80'
-      - 'traefik.frontend.rule=Host:pma.${BACKEND_HOST}'
-
-  mailhog:
-    image: mailhog/mailhog
-    labels:
-      - 'traefik.backend=mailhog'
-      - 'traefik.port=8025'
-      - 'traefik.frontend.rule=Host:mailhog.${BACKEND_HOST}'
-
   traefik:
     image: traefik
-    restart: unless-stopped
+    container_name: "${PROJECT_NAME}_traefik"
     command: -c /dev/null --web --docker --logLevel=INFO
     ports:
       - '80:80'

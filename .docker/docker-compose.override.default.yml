@@ -7,23 +7,25 @@ services:
 
   mariadb:
     volumes:
-      - ./mysql:/var/lib/mysql:cached
+      - ${MYSQL_DATA_DIR}/${MYSQL_DATA_DIR_DRUPAL}:/var/lib/mysql:cached
 
   php:
-    # Uncomment to enable XDebug.
-    # https://wodby.com/stacks/drupal/docs/local/xdebug/
-    #environment:
-    #  PHP_XDEBUG: 1
-    #  PHP_XDEBUG_DEFAULT_ENABLE: 1
-    #  PHP_XDEBUG_REMOTE_CONNECT_BACK: 0
-    #  PHP_IDE_CONFIG: serverName=my-ide
-    #  PHP_XDEBUG_REMOTE_HOST: host.docker.internal
+    environment:
+      TEST_USERS_PASSWORD: ${TEST_USERS_PASSWORD}
+      ENVIRONMENT: ${ENVIRONMENT}
+## Read instructions at https://docs.wodby.com/stacks/php/containers/#xdebug-local
+#      PHP_XDEBUG: 1
+#      PHP_XDEBUG_DEFAULT_ENABLE: 1
+#      PHP_XDEBUG_REMOTE_CONNECT_BACK: 0
+#      PHP_IDE_CONFIG: serverName=my-ide
+#      PHP_XDEBUG_REMOTE_HOST: host.docker.internal # Docker 18.03+ & Linux/Mac/Win
+#      PHP_XDEBUG_REMOTE_HOST: 172.17.0.1 # Linux, Docker < 18.03
+#      PHP_XDEBUG_REMOTE_HOST: 10.254.254.254 # macOS, Docker < 18.03
+#      PHP_XDEBUG_REMOTE_HOST: 10.0.75.1 # Windows, Docker < 18.03
     volumes:
       - ../drupal:/var/www/html:cached
+      - ../${BACKUP_DIR}:/var/www/html/${BACKUP_DIR}:cached
 
   nginx:
-    #environment:
-      # NGINX_PAGESPEED: "on"
-      # NGINX_DRUPAL_FILE_PROXY_URL: http://example.com
     volumes:
       - ../drupal:/var/www/html:cached

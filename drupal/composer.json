@@ -1,9 +1,24 @@
 {
-    "name": "contentacms/contenta-jsonapi-project",
-    "description": "Project template for ",
+    "name": "systemseed/drupal_reactjs_boilerplate",
+    "description": "Project template for quick start with headless Drupal and React.js",
     "type": "project",
     "license": "GPL-2.0-or-later",
     "authors": [
+        {
+            "name": "Evgeniy Maslovskiy",
+            "email": "evgeniy@systemseed.com",
+            "role": "Developer"
+        },
+        {
+            "name": "Andrew Berezovsky",
+            "email": "andrew@systemseed.com",
+            "role": "Developer"
+        },
+        {
+            "name": "Kate Marshalkina",
+            "email": "kate@systemseed.com",
+            "role": "Developer"
+        }
     ],
     "repositories": [
         {
@@ -13,49 +28,59 @@
     ],
     "require": {
         "contentacms/contenta_jsonapi": "dev-8.x-2.x",
-        "drupal-composer/drupal-scaffold": "^2.2",
-        "cweagans/composer-patches": "^1.6.0",
-        "webflo/drupal-core-strict": "8.5.3",
-        "drush/drush": "~8.1.12",
-        "drupal/material_admin": "1.x-dev"
+        "drupal-composer/drupal-scaffold": "^2.5",
+        "cweagans/composer-patches": "^1.6",
+        "vlucas/phpdotenv": "^2.4",
+        "drush/drush": "^9.0.0",
+        "composer/installers": "^1.2",
+        "webflo/drupal-finder": "^1.0.0",
+        "webmozart/path-util": "^2.3"
+    },
+    "require-dev": {
+        "webflo/drupal-core-require-dev": "^8.6.0",
+        "vijaycs85/drupal-quality-checker": "^1.0"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
     "autoload": {
-        "classmap": [
-            "scripts/composer/ScriptHandler.php"
-        ]
-    },
-    "scripts": {
-        "dependency-cleanup": [
-            "Drupal\\composer\\ScriptHandler::dependencyCleanup"
-        ],
-        "drupal-scaffold": "Drupal\\DrupalScaffold\\Plugin::scaffold",
-        "post-install-cmd": [
-            "Drupal\\composer\\ScriptHandler::buildScaffold",
-            "Drupal\\composer\\ScriptHandler::createRequiredFiles"
-        ],
-        "post-update-cmd": [
-            "Drupal\\composer\\ScriptHandler::buildScaffold",
-            "Drupal\\composer\\ScriptHandler::createRequiredFiles"
+        "files": [
+            "load.environment.php"
         ]
     },
     "extra": {
         "installer-paths": {
-            "web/core": ["type:drupal-core"],
-            "web/libraries/{$name}": ["type:drupal-library"],
-            "web/modules/contrib/{$name}": ["type:drupal-module"],
-            "web/profiles/contrib/{$name}": ["type:drupal-profile"],
-            "web/themes/contrib/{$name}": ["type:drupal-theme"],
-            "drush/contrib/{$name}": ["type:drupal-drush"]
+            "web/core": [
+                "type:drupal-core"
+            ],
+            "web/libraries/{$name}": [
+                "type:drupal-library"
+            ],
+            "web/modules/contrib/{$name}": [
+                "type:drupal-module"
+            ],
+            "web/profiles/contrib/{$name}": [
+                "type:drupal-profile"
+            ],
+            "web/themes/contrib/{$name}": [
+                "type:drupal-theme"
+            ],
+            "drush/contrib/{$name}": [
+                "type:drupal-drush"
+            ]
+        },
+        "drupal-scaffold": {
+            "initial": {
+                "sites/default/default.services.yml": "sites/default/services.yml",
+                "sites/default/default.settings.php": "sites/default/settings.php"
+            },
+            "omit-defaults": false
         },
         "enable-patching": true,
-        "patches":{}
+        "patches": {}
     },
     "config": {
         "preferred-install": {
             "*": "auto"
-        },
-        "bin-dir": "bin/"
+        }
     }
 }

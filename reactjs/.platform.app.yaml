@@ -29,7 +29,7 @@ web:
 
 hooks:
   build: |
-    yarn install
+    yarn --production install
     yarn run build
   deploy: |
     echo "== DEPLOY SUCCESSFULLY COMPLETED $(date +"%d.%m.%Y %T") =="
