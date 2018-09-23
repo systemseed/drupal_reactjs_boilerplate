@@ -43,7 +43,7 @@ class HomePage extends React.Component {
 HomePage.propTypes = {
   users: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string,
-    id: PropTypes.number,
+    id: PropTypes.string,
   })),
 };
 
