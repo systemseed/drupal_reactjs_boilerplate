@@ -129,13 +129,3 @@ crons:
     snapshot:
         spec: '1 */12 * * *'
         cmd: 'if [ "$PLATFORM_BRANCH" = master ]; then platform snapshot:create --yes --no-wait; fi'
-
-    # Make dumps of database and store in ~/drush-backups. Delete old backups.
-    dump_db:
-        spec: '10 */12 * * *'
-        cmd: 'if [ "$PLATFORM_BRANCH" = master ]; then scripts/dump_db.sh; fi'
-
-    # Upload production db dumps to Amazon S3.
-    upload_production_backups:
-        spec: '15 */2 * * *'
-        cmd: 'if [ "$PLATFORM_BRANCH" = master ]; then php scripts/upload_backups.php; fi'
