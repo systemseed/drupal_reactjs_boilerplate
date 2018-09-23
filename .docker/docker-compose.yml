@@ -70,7 +70,7 @@ services:
           - $BACKEND_HOST
 
   codecept:
-    image: systemseed/codeception:2.4.5-1.0
+    image: systemseed/codeception:2.4.5-1.0-drupal
     container_name: "${PROJECT_NAME}_codecept"
     environment:
       DB_HOST: ${DB_HOST}
