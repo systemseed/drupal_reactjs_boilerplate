@@ -68,3 +68,23 @@ services:
         aliases:
           - $FRONTEND_HOST
           - $BACKEND_HOST
+
+  codecept:
+    image: systemseed/codeception:2.4.5-1.0
+    container_name: "${PROJECT_NAME}_codecept"
+    environment:
+      DB_HOST: ${DB_HOST}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_NAME: ${DB_NAME}
+      BACKEND_URL: ${BACKEND_URL}
+      FRONTEND_URL: ${FRONTEND_URL}
+      TEST_USERS_PASSWORD: ${TEST_USERS_PASSWORD}
+      DEVELOPMENT_MODULES: ${DEVELOPMENT_MODULES}
+
+  chrome:
+    image: selenium/standalone-chrome:3.14.0-arsenic
+    container_name: "${PROJECT_NAME}_chrome"
+    expose:
+      - 4444
+    shm_size: 2gb

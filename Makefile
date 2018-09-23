@@ -5,7 +5,8 @@ install install\:platformsh update \
 db\:dump db\:drop db\:import \
 files\:sync files\:sync\:public files\:sync\:private \
 code\:check code\:fix \
-yarn logs
+yarn logs \
+tests\:prepare tests\:run tests\:cli tests\:autocomplete
 
 # Create local environment files.
 $(shell cp -n \.\/\.docker\/docker-compose\.override\.default\.yml \.\/\.docker\/docker-compose\.override\.yml)
@@ -111,6 +112,9 @@ install:
 	@$(MAKE) -s prepare\:backend
 	$(call docker-www-data, php drush -r /var/www/html/web site-install contenta_jsonapi --existing-config \
 		--db-url=mysql://$(DB_USER):$(DB_PASSWORD)@$(DB_HOST)/$(DB_NAME) --site-name=$(PROJECT_NAME) --account-pass=admin --yes)
+	$(call message,$(PROJECT_NAME): Preparing test suite...)
+	@$(MAKE) -s tests\:prepare
+	@$(MAKE) -s tests\:autocomplete
 	$(call message,$(PROJECT_NAME): The application is ready!)
 
 ######################################################
@@ -248,6 +252,30 @@ yarn:
 logs:
 	$(call message,$(PROJECT_NAME): Streaming the Next.js application logs...)
 	docker-compose logs -f node
+
+##############################
+# Testing framework commands #
+##############################
+
+tests\:prepare:
+	$(call message,$(PROJECT_NAME): Preparing Codeception framework for testing...)
+	docker-compose run --rm codecept build
+
+tests\:run:
+	$(call message,$(PROJECT_NAME): Running Codeception tests...)
+	$(eval ARGS := $(filter-out $@,$(MAKECMDGOALS)))
+	docker-compose run --rm codecept run $(ARGS) --debug
+
+tests\:cli:
+	$(call message,$(PROJECT_NAME): Opening Codeception container CLI...)
+	docker-compose run --rm --entrypoint bash codecept
+
+tests\:autocomplete:
+	$(call message,$(PROJECT_NAME): Copying Codeception codbasee in .codecept folder to enable IDE autocomplete...)
+	docker-compose up -d codecept
+	rm -rf .codecept
+	docker cp $(PROJECT_NAME)_codecept:/repo/ .codecept
+	rm -rf .codecept/.git
 
 # https://stackoverflow.com/a/6273809/1826109
 %:

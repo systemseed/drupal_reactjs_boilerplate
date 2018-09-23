@@ -29,3 +29,8 @@ services:
   nginx:
     volumes:
       - ../drupal:/var/www/html:cached
+
+  codecept:
+    volumes:
+    - ../tests:/project/tests:cached
+    - ../tests/codeception.yml:/project/codeception.yml
