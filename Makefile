@@ -86,7 +86,10 @@ composer:
 prepare\:backend:
 	$(call message,$(PROJECT_NAME): Installing/updating Drupal (Contenta CMS) dependencies...)
 	-$(call docker-wodby, php composer install --no-suggest)
-	$(call message,$(PROJECT_NAME): Making settings.php writable...)
+	$(call message,$(PROJECT_NAME): Fixing file permissions...)
+	$(call docker-root, php chown -R wodby: web)
+	$(call docker-wodby, php mkdir -p web/sites/default/files)
+	$(call docker-root, php chown -R www-data: web/sites/default/files)
 	$(call docker-wodby, php chmod 666 web/sites/default/settings.php)
 
 prepare\:frontend:
