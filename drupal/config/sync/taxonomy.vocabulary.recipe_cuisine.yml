@@ -1,0 +1,14 @@
+uuid: 30b0ee7f-fb8a-4031-b70a-4701f307c1f6
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - recipes_magazin
+_core:
+  default_config_hash: r14oAJhDco-h1qiosUUd3X_WZ7_Q4SYr5EJmbp8CLYQ
+name: 'Recipe cuisine'
+vid: recipe_cuisine
+description: ''
+hierarchy: 0
+weight: 0

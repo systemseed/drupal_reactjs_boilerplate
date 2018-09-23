@@ -1,0 +1,25 @@
+uuid: 0d1c46d5-b2aa-46c9-8135-5238ae7703d8
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - recipes_magazin
+  module:
+    - node
+_core:
+  default_config_hash: uykYNMnOLiEt5drt7aoOQyRj5uWr2ErPfPx4qLPjxQw
+id: node.field_cooking_time
+field_name: field_cooking_time
+entity_type: node
+type: integer
+settings:
+  unsigned: false
+  size: normal
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

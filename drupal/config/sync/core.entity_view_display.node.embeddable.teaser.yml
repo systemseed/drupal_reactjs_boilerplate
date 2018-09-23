@@ -1,0 +1,35 @@
+uuid: 80e68a22-c449-4faf-be77-3e122a89e982
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.embeddable.background_image
+    - field.field.node.embeddable.reference
+    - field.field.node.embeddable.text
+    - node.type.embeddable
+  module:
+    - user
+_core:
+  default_config_hash: jS37XQUiH1Ls3QugU7SNamaWR4v38SM5u32ocTiI3CQ
+id: node.embeddable.teaser
+targetEntityType: node
+bundle: embeddable
+mode: teaser
+content:
+  links:
+    weight: 100
+    region: content
+  title:
+    label: hidden
+    type: string
+    weight: -5
+    region: content
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+hidden:
+  background_image: true
+  langcode: true
+  reference: true
+  text: true

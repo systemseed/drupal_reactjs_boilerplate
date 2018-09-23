@@ -6,5 +6,5 @@
  */
 export const user = data => ({
   name: data.name,
-  id: data.uid,
+  id: data.id,
 });

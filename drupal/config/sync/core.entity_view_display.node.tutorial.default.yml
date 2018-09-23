@@ -1,0 +1,71 @@
+uuid: da8bda36-f3da-4a63-9aca-adab90c25a0a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.tutorial.field_image
+    - field.field.node.tutorial.field_link
+    - field.field.node.tutorial.field_summary
+    - field.field.node.tutorial.field_topic
+    - node.type.tutorial
+  module:
+    - link
+    - options
+    - text
+    - user
+_core:
+  default_config_hash: yObmtQ3uPEdfJ1UVtLBtT93oGX6_YNgRcqCziXAP4qw
+id: node.tutorial.default
+targetEntityType: node
+bundle: tutorial
+mode: default
+content:
+  field_image:
+    weight: 103
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  field_link:
+    weight: 102
+    label: above
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+    third_party_settings: {  }
+    type: link
+    region: content
+  field_summary:
+    weight: 101
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+    region: content
+  field_topic:
+    weight: 104
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: list_default
+    region: content
+  links:
+    weight: 100
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  title:
+    label: hidden
+    type: string
+    weight: -5
+    region: content
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+hidden:
+  langcode: true

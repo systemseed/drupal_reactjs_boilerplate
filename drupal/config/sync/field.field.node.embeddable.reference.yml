@@ -1,0 +1,34 @@
+uuid: 024ed1f9-2463-44a2-adf6-84cccfd6415d
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.reference
+    - node.type.article
+    - node.type.embeddable
+    - node.type.page
+    - node.type.recipe
+_core:
+  default_config_hash: CTXmauU9Mh-aTw0ynsotL43hBQef0uPz97RFtwVkcB4
+id: node.embeddable.reference
+field_name: reference
+entity_type: node
+bundle: embeddable
+label: Reference
+description: 'References to another piece of content'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      article: article
+      page: page
+      recipe: recipe
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: article
+field_type: entity_reference

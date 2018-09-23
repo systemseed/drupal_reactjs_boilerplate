@@ -1,0 +1,21 @@
+uuid: a95ebaf0-5813-4dc9-a5f2-f97436099401
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - image
+      - recipes_magazin
+_core:
+  default_config_hash: VUa8QtEzI0QIEY19K3flRrVItetDoJOcOdtrfRxKAkE
+name: card
+label: 'Card image (574×323)'
+effects:
+  2d64dc69-465d-4256-badf-f39311d985d4:
+    uuid: 2d64dc69-465d-4256-badf-f39311d985d4
+    id: image_scale_and_crop
+    weight: 1
+    data:
+      width: 574
+      height: 323
+      anchor: center-center

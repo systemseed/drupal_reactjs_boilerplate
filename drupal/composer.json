@@ -37,8 +37,7 @@
         "webmozart/path-util": "^2.3"
     },
     "require-dev": {
-        "webflo/drupal-core-require-dev": "^8.6.0",
-        "vijaycs85/drupal-quality-checker": "^1.0"
+
     },
     "minimum-stability": "dev",
     "prefer-stable": true,

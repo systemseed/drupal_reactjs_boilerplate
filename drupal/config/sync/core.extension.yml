@@ -8,6 +8,7 @@ module:
   consumer_image_styles: 0
   consumers: 0
   contenta_enhancements: 0
+  contentajs: 0
   datetime: 0
   datetime_range: 0
   dropzonejs: 0
@@ -19,11 +20,8 @@ module:
   entity_reference: 0
   field: 0
   field_ui: 0
-  fieldable_path: 0
   file: 0
   filter: 0
-  graphql: 0
-  graphql_core: 0
   hal: 0
   help: 0
   image: 0
@@ -47,6 +45,7 @@ module:
   page_cache: 0
   path: 0
   rdf: 0
+  recipes_magazin: 0
   responsive_image: 0
   rest: 0
   schemata: 0
@@ -66,7 +65,6 @@ module:
   views: 0
   menu_link_content: 1
   contenta_jsonapi: 1000
-  contenta_graphql: 1001
 theme:
   stable: 0
   classy: 0

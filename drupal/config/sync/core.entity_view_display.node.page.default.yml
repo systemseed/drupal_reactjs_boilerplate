@@ -1,0 +1,40 @@
+uuid: 5203eee3-4cf4-4cfe-b19a-d53e4e4ed057
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.page.body
+    - node.type.page
+  enforced:
+    module:
+      - recipes_magazin
+  module:
+    - text
+    - user
+_core:
+  default_config_hash: s6TY2fd513E6kgYjndeakGMZif1hrjFf4qepVBuXANM
+id: node.page.default
+targetEntityType: node
+bundle: page
+mode: default
+content:
+  body:
+    label: hidden
+    type: text_default
+    weight: 100
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  links:
+    weight: 101
+    region: content
+  title:
+    label: hidden
+    type: string
+    weight: -5
+    region: content
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+hidden:
+  langcode: true

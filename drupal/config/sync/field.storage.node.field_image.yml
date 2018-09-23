@@ -1,0 +1,26 @@
+uuid: b247380e-30e1-4f74-8dd1-82bd069e545a
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - recipes_magazin
+      - image
+  module:
+    - media
+    - node
+_core:
+  default_config_hash: d3kzmoDTBg9Nh2TKbqWlAYG23esa4yzgm6OxfIs0_2w
+id: node.field_image
+field_name: field_image
+entity_type: node
+type: entity_reference
+settings:
+  target_type: media
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

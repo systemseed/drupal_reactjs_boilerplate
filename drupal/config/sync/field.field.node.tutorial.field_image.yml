@@ -1,0 +1,31 @@
+uuid: 134b7d8d-5c15-4d9d-a325-30548bcd78f7
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_image
+    - media.type.image
+    - node.type.tutorial
+_core:
+  default_config_hash: 3q4yuxQzSpvCxBP6aOMUzxZ-tAEuPQi0N3h2pCnrMP4
+id: node.tutorial.field_image
+field_name: field_image
+entity_type: node
+bundle: tutorial
+label: Image
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:media'
+  handler_settings:
+    target_bundles:
+      image: image
+    sort:
+      field: created
+      direction: DESC
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

@@ -8,9 +8,12 @@ import * as transforms from '../utils/transforms';
  */
 export const getAll = () => new Promise((resolve, reject) => {
   request
-    .get('/api/user/user')
+    .get('/api/users')
     .query({
-      'fields[user]': 'name, uid',
+      'fields[users]': 'id,name',
+      'filter[no_anon][condition][path]': 'uid',
+      'filter[no_anon][condition][operator]': '>',
+      'filter[no_anon][condition][value]': '0',
     })
     // Tell superagent to consider any valid Drupal response as successful.
     // Later we can capture error codes if needed.

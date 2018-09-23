@@ -1,0 +1,14 @@
+uuid: 11846e13-03b4-42ee-826d-c8de5a2af222
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - recipes_magazin
+_core:
+  default_config_hash: 97D5N9uJb3upzp4QL-tD8fvNl24AL6TyTuGx48ExXxc
+name: Ingredients
+vid: ingredients
+description: ''
+hierarchy: 0
+weight: 0

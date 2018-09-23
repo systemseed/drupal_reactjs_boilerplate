@@ -1,0 +1,21 @@
+uuid: 50adcb21-4291-41ea-8d4c-a7b58b84dfd2
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - image
+      - recipes_magazin
+_core:
+  default_config_hash: E4bbiVE4plWHYcHrf1UGF_gNO35uS70iAM2feJ0oQ8w
+name: square_medium
+label: 'Square Medium'
+effects:
+  c42becc5-dd14-4384-81e1-8a667c60a705:
+    uuid: c42becc5-dd14-4384-81e1-8a667c60a705
+    id: image_scale_and_crop
+    weight: 1
+    data:
+      width: 600
+      height: 600
+      anchor: center-center

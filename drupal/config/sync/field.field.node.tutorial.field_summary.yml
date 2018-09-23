@@ -1,0 +1,23 @@
+uuid: d96650a8-9336-4f1e-b4a3-e3d1334d319b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_summary
+    - node.type.tutorial
+  module:
+    - text
+_core:
+  default_config_hash: '-NEomTAYjmxI_f9MLtJyyrxb2VZduKvSYMb18XdhT8A'
+id: node.tutorial.field_summary
+field_name: field_summary
+entity_type: node
+bundle: tutorial
+label: Summary
+description: 'Describe the documentation item in a few lines.'
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long

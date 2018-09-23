@@ -1,0 +1,26 @@
+uuid: 7566f6c1-6959-4eec-81d7-0ceddb96fc01
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - recipes_magazin
+  module:
+    - node
+_core:
+  default_config_hash: HGzCT5zLUXSvILLSIRN8sCl1pEdzy1x31cQ1uTJZQTc
+id: node.field_ingredients
+field_name: field_ingredients
+entity_type: node
+type: string
+settings:
+  max_length: 255
+  is_ascii: false
+  case_sensitive: false
+module: core
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

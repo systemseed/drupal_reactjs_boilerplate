@@ -1,0 +1,21 @@
+uuid: 9d984cbb-7cbc-4813-87da-e684be20f84e
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - image
+      - recipes_magazin
+_core:
+  default_config_hash: U1X0O4EYQutUcVQcShrezGrGCADGrcDqm_xi8JdaZik
+name: square_small
+label: 'Square Small'
+effects:
+  6c19e3f2-f291-4824-bc17-e485a979502c:
+    uuid: 6c19e3f2-f291-4824-bc17-e485a979502c
+    id: image_scale_and_crop
+    weight: 1
+    data:
+      width: 300
+      height: 300
+      anchor: center-center

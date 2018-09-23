@@ -1,4 +1,4 @@
-uuid: 421d5fe4-8db5-4f63-bfd9-9080eab30634
+uuid: 23603f08-914e-4e0d-8c97-fc9239c4ba66
 langcode: en
 status: true
 dependencies: {  }
@@ -12,3 +12,4 @@ effects:
     data:
       width: 350
       height: 300
+      anchor: center-center
