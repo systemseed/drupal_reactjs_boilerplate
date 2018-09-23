@@ -37,7 +37,6 @@
         "webmozart/path-util": "^2.3"
     },
     "require-dev": {
-
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
