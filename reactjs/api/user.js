@@ -8,9 +8,9 @@ import * as transforms from '../utils/transforms';
  */
 export const getAll = () => new Promise((resolve, reject) => {
   request
-    .get('/api/users')
+    .get('/api/user/user')
     .query({
-      'fields[users]': 'id,name',
+      'fields[user--user]': 'id,name',
       'filter[no_anon][condition][path]': 'uid',
       'filter[no_anon][condition][operator]': '>',
       'filter[no_anon][condition][value]': '0',
