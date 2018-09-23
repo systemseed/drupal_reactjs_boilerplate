@@ -1,7 +1,6 @@
 # Directories with packages managed by composer.
 /vendor
-/web/core/*
-!/web/core/.gitkeep
+/web/core
 /web/modules/contrib
 /web/libraries
 /web/profiles/contrib
