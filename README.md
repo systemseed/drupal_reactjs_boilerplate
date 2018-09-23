@@ -1,3 +1,5 @@
+[![CircleCI](https://circleci.com/gh/systemseed/drupal_reactjs_boilerplate.svg?style=svg)](https://circleci.com/gh/systemseed/drupal_reactjs_boilerplate)
+
 # Installation
 
 1. Project setup is Mac by default, so if you are running MacOS then
