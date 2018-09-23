@@ -1,8 +1,9 @@
+import './_style.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Pagination, PaginationItem, PaginationLink, Container, Row, Col } from 'reactstrap';
 import { withRouter } from 'next/router';
-import { Router } from '../../../../routes';
+import { Router } from '../../../routes';
 
 class MiniPager extends React.Component {
   constructor(props) {

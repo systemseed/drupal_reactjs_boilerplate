@@ -2,8 +2,6 @@ const compression = require('compression');
 const express = require('express');
 const basicAuth = require('express-basic-auth');
 const nextjs = require('next');
-const sass = require('node-sass');
-const globImporter = require('node-sass-glob-importer');
 const dotenv = require('dotenv');
 const routes = require('./routes');
 
@@ -35,21 +33,6 @@ app.prepare()
 
     // Serve gzipped content where possible.
     expressServer.use(compression());
-
-    // Add route to serve compiled SCSS from /assets/{build id}/main.css
-    // Note: This is only used in production, in development css is inline.
-    const sassResult = sass.renderSync({
-      file: './styles/theme.scss',
-      outputStyle: 'compressed',
-      importer: globImporter(),
-    });
-
-    expressServer.get('/assets/:id/main.css', (req, res) => {
-      res.setHeader('Content-Type', 'text/css');
-      res.setHeader('Cache-Control', 'public, max-age=2592000');
-      res.setHeader('Expires', new Date(Date.now() + 2592000000).toUTCString());
-      res.send(sassResult.css);
-    });
 
     // Send robots.txt file from /static folder.
     const options = {

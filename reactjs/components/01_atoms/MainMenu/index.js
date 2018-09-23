@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React  from 'react';
 import { NavbarToggler, NavItem, Nav, Collapse } from 'reactstrap';
 import { Link } from '../../../routes';
 
@@ -22,7 +22,7 @@ class MainMenu extends React.Component {
   render() {
     const { isOpen } = this.state;
     return (
-      <Fragment>
+      <>
         <NavbarToggler onClick={this.toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="ml-auto" navbar>
@@ -35,7 +35,7 @@ class MainMenu extends React.Component {
 
           </Nav>
         </Collapse>
-      </Fragment>
+      </>
     );
   }
 }

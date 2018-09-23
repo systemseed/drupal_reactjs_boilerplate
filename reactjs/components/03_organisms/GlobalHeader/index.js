@@ -1,3 +1,4 @@
+import './_style.scss';
 import React from 'react';
 import { Container, Row, Col, Navbar } from 'reactstrap';
 import Logo from '../../01_atoms/Logo';

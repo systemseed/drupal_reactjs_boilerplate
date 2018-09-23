@@ -20,9 +20,7 @@
 | ----------------------------------------| ------------------- |
 | http://app.docker.localhost             | ReactJS application |
 | http://drupal.docker.localhost          | Drupal 8            |
-| http://pma.drupal.docker.localhost      | PhpMyAdmin          |
-| http://mailhog.drupal.docker.localhost  | Mailhog             |
- 
+
 # What is included into this boilerplate?
  
 ### General
@@ -38,24 +36,26 @@
 
 - Example of backend request with data fetching & rendering
 - Server Side rendering support (the application is based on [Next.js](https://github.com/zeit/next.js/))
+- Support of `.scss` files per component. The application will automatically add compiled `.css` file for each page with styles from components used for the page.
 - Live reloading for any `css` / `js` changes
-- Opinionated but (hopefully) beautiful code style pattern based on Airbnb's work. Just run `make lint` to get the frontend code checked against coding standards.
-- `SCSS` support for quick theming start. The `.scss` files expected to be added within component folders for better long term support.
+- Mobile ready navigation menu
+- Opinionated code style pattern based on Airbnb's work. Just run `make code:check` to get the frontend code checked against coding standards.
 - Configured `Redux` + `Redux saga` with example
 - Configured `robots.txt` file
-- Included `Bootstrap 4` support
+- Included `Bootstrap 4` support (can be easily removed if necessary)
 - Beautiful page transition indicator
 
 ### Backend
-  
+
 - Always fresh version of [Contenta CMS](http://www.contentacms.org) (Drupal powered distribution focused on abstracting of content).
 - Configured Drupal installation to work with React.js application
 - Nice admin theme
-- Other features of Contenta CMS out of the box. You should really [check them out](http://contentacms.readthedocs.io/en/latest/)! 
+- Other cool features of Contenta CMS out of the box. You should really [check them out](http://contentacms.readthedocs.io/en/latest/)! 
 
 # Command list
 
 - `make install` - installs the whole application locally.
+- `make update` - runs all necessary commands to update your local environment after external changes (switch to another git branch, etc).
 - `make install:platformsh` - if using platform.sh, will install the project from Platform.sh master database and sync files from it to the local environment.
 - `make up` - runs the application in console debug mode.
 - `make stop` - pauses the application.

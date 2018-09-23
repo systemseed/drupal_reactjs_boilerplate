@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React  from 'react';
 import App, { Container } from 'next/app';
 import { Provider } from 'react-redux';
 import withRedux from 'next-redux-wrapper';
@@ -43,7 +43,7 @@ class Application extends App {
     return (
       <Container>
         <Provider store={store}>
-          <Fragment>
+          <>
             <HtmlHead />
             <SiteLayout>
               {statusCode === 200
@@ -53,7 +53,7 @@ class Application extends App {
               && <ErrorMessage statusCode={statusCode} />
               }
             </SiteLayout>
-          </Fragment>
+          </>
         </Provider>
       </Container>
     );
