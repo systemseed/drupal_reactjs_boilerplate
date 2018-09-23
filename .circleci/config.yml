@@ -21,14 +21,14 @@ jobs:
             sed -i '/-dev-macos-/s/^/# /g' \.env
 
       - run:
-          name: Check PHP & Javascript code for compliance with Drupal Coding Standards.
-          command: make code:check
-          when: always
-
-      - run:
           name: Make local environment
           command: make install
           no_output_timeout: 20m
+
+      - run:
+          name: Check PHP & Javascript code for compliance with Drupal Coding Standards.
+          command: make code:check
+          when: always
 
       - run:
           name: Add hosts into /etc/hosts

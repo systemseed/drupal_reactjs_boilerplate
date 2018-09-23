@@ -1,5 +1,5 @@
 import './_style.scss';
-import React  from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import GlobalHeader from '../../03_organisms/GlobalHeader';
 import GlobalFooter from '../../03_organisms/GlobalFooter';

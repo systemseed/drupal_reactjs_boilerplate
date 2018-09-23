@@ -1,4 +1,4 @@
-import React  from 'react';
+import React from 'react';
 import { NavbarToggler, NavItem, Nav, Collapse } from 'reactstrap';
 import { Link } from '../../../routes';
 
