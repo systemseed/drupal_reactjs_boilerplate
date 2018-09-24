@@ -2,7 +2,7 @@
 
 use Drupal\user\Entity\User;
 
-class DevelopmentTest extends \Codeception\Test\Unit {
+class ExampleTest extends \Codeception\Test\Unit {
 
   /**
    * @var \UnitTester
