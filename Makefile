@@ -96,7 +96,7 @@ prepare\:backend:
 
 prepare\:frontend:
 	$(call message,$(PROJECT_NAME): Installing dependencies for React.js application...)
-	docker-compose run --rm --user=0:0 node yarn install
+	docker-compose run --rm node yarn install
 
 prepare\:platformsh:
 	$(call message,$(PROJECT_NAME): Setting Platform.sh git remote..)
