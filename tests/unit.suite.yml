@@ -4,7 +4,7 @@
 actor: UnitTester
 modules:
   enabled:
+    - Db
     - Asserts
     - \Helper\Unit
-    - Db
     - \Codeception\Module\Drupal8\Drupal8

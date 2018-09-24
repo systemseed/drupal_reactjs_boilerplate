@@ -5,9 +5,9 @@
 actor: ApiTester
 modules:
   enabled:
-    - \Helper\Api
-    - Asserts
     - Db
+    - Asserts
+    - \Helper\Api
     - \Codeception\Module\Drupal8\Drupal8
     - REST:
         depends: PhpBrowser

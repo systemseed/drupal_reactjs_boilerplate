@@ -34,3 +34,4 @@ services:
     volumes:
     - ../tests:/project/tests:cached
     - ../tests/codeception.yml:/project/codeception.yml
+    - ../drupal:/app:ro # Read only.

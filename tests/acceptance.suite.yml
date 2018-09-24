@@ -9,6 +9,7 @@ modules:
     - Db
     - WebDriver
     - \Helper\Acceptance
+    - \Codeception\Module\Drupal8\Drupal8
   config:
     WebDriver:
       browser: chrome

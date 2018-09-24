@@ -11,7 +11,7 @@ services:
     labels:
       - 'traefik.backend=node'
       - 'traefik.port=3000'
-      - 'traefik.frontend.rule=Host:${FRONTEND_HOST}, {$TESTS_FRONTEND_HOST}'
+      - 'traefik.frontend.rule=Host:${FRONTEND_HOST}, ${TESTS_FRONTEND_HOST}'
     expose:
       - "3000"
     command: yarn start:dev
@@ -53,7 +53,7 @@ services:
     labels:
       - 'traefik.backend=nginx'
       - 'traefik.port=80'
-      - 'traefik.frontend.rule=Host:${BACKEND_HOST}, {$TESTS_BACKEND_HOST}'
+      - 'traefik.frontend.rule=Host:${BACKEND_HOST}, ${TESTS_BACKEND_HOST}'
 
   traefik:
     image: traefik
