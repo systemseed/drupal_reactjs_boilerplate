@@ -11,6 +11,10 @@ jobs:
       - checkout
 
       - run:
+          name: Fix circleci file permissons
+          command: chown ubuntu:ubuntu -R *
+
+      - run:
           name: Prepare local environment file
           command: |
             make prepare
