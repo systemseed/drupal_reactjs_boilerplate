@@ -14,7 +14,7 @@
     - edit the created `.env` file in the root of the project and uncomment `PHP_TAG` version for Linux
     - run `make install`
 
-3. That's it, the app is ready!
+3. That's it, the app is ready! Login credentials for Drupal is `admin` / `admin`.
 
 # Access applications
  
@@ -54,6 +54,23 @@
 - Nice admin theme
 - Other cool features of Contenta CMS out of the box. You should really [check them out](http://contentacms.readthedocs.io/en/latest/)! 
 
+### Automated testing
+
+The boilerplate comes with 3 different types of tests:
+
+- `Unit / Integration tests` for Drupal. This type of tests great for testing any Drupal specific code. It has database connection and Drupal codebase support. See example in `./tests/unit/example/ExampleTest.php`.
+- `API tests`. This type of tests is used to cover customizations of Drupal API endpoints. For example, custom REST endpoints or modifications of JSON API responses. See example in `./tests/api/example/ExampleCest.php`.
+- `Acceptance tests`. This type of tests emulates real user behavior in a real browser and suited to automate end-to-end testing of project features. See example in `./tests/acceptance/example/ExampleCest.php`.
+
+Here's list of shorthands to run tests locally (make sure all docker containers are up by running `make up` before):
+
+- `make tests:run` - runs all types of tests
+- `make tests:run unit` - runs Unit / Integration tests only
+- `make tests:run api` - runs API tests only
+- `make tests:run acceptance` - runs Acceptance tests only
+- `make tests:run tests/api/example/ExampleCest` - runs all tests from a specified file
+- `make tests:run tests/api/example/ExampleCest::authenticateAdmin` - runs only specified test
+
 # Command list
 
 - `make install` - installs the whole application locally.
@@ -68,3 +85,4 @@
 - `make yarn` - runs yarn inside of node container. Example of use: `make yarn add lodash`.
 - `make code:check` - checks Drupal / React.js coding standards compliance.
 - `make code:fix` - checks Drupal / React.js coding standards compliance and fixes issues if possible.
+- `make tests:run` - runs all types of tests (unit, API, acceptance). If you want to run only 1 type of tests, run `make tests:run acceptance` for example.
