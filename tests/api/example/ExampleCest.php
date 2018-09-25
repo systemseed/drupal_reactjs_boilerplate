@@ -64,7 +64,7 @@ class ExampleCest {
    *
    * @param \ApiTester $I
    */
-  /*public function accessJsonApiUserData(\ApiTester $I) {
+  public function accessJsonApiUserData(\ApiTester $I) {
     $path_prefix = \Drupal::config('jsonapi_extras.settings')
       ->get('path_prefix');
 
@@ -86,5 +86,5 @@ class ExampleCest {
         ]
       ]
     );
-  }*/
+  }
 }
