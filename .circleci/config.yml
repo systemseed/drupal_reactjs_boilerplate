@@ -11,7 +11,11 @@ jobs:
       - checkout
 
       - run:
-          name: Prepare local environment file
+          name: Fix circleci files permissons
+          command: sudo chown ubuntu:ubuntu -R *
+
+      - run:
+          name: Change used PHP Docker image to the Linux specific one
           command: |
             make prepare
             # The project setup is Mac by default, so we need to change to Linux image.
@@ -21,33 +25,32 @@ jobs:
             sed -i '/-dev-macos-/s/^/# /g' \.env
 
       - run:
-          name: Make local environment
+          name: Download Docker images
+          command: make pull
+
+      - run:
+          name: Install the whole application locally
           command: make install
           no_output_timeout: 20m
 
       - run:
-          name: Check PHP & Javascript code for compliance with Drupal Coding Standards.
+          name: Check Drupal & React.js code for compliance with coding standards
           command: make code:check
-          when: always
 
       - run:
-          name: Add hosts into /etc/hosts
-          command: echo 127.0.0.1 app.docker.localhost drupal.docker.localhost | sudo tee -a /etc/hosts
+          name: Run Unit (integration) tests
+          command: make tests:run unit
 
-      #- run:
-      #    name: Prepare tests
-      #    command: make tests:prepare
+      - run:
+          name: Run API tests
+          command: make tests:run api
 
-      #- run:
-      #    name: Run unit (integration) tests
-      #    command: make tests:run unit
+      - run:
+          name: Run Acceptance tests
+          command: make tests:run acceptance
 
-      #- run:
-      #    name: Run API tests
-      #    command: make tests:run api
-
-      #- store_artifacts:
-      #    path: tests/_output
+      - store_artifacts:
+          path: tests/_output
 
 workflows:
   version: 2

@@ -1,0 +1,15 @@
+# Codeception Test Suite Configuration.
+# API tests.
+# @see https://codeception.com/docs/10-WebServices
+# @ss https://codeception.com/docs/modules/REST
+actor: ApiTester
+modules:
+  enabled:
+    - Db
+    - Asserts
+    - \Helper\Api
+    - \Codeception\Module\Drupal8\Drupal8
+    - REST:
+        depends: PhpBrowser
+        timeout: 90
+        part: Json

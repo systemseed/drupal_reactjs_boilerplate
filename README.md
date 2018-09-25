@@ -14,7 +14,7 @@
     - edit the created `.env` file in the root of the project and uncomment `PHP_TAG` version for Linux
     - run `make install`
 
-3. That's it, the app is ready!
+3. That's it, the app is ready! Login credentials for Drupal is `admin` / `admin`.
 
 # Access applications
  
@@ -22,6 +22,16 @@
 | ----------------------------------------| ------------------- |
 | http://app.docker.localhost             | ReactJS application |
 | http://drupal.docker.localhost          | Drupal 8            |
+
+# Playing with demo content
+
+This boilerplate comes development ready by default, therefore demo content is disabled. If you want to explore demo content from Contenta CMS, you need to enable `Recipes Magazin` module:
+
+- `make drush en recipes_magazin`
+- `make drush cr` (that's not needed usually, but JSON API endpoints becomes not available after module's install. Cache rebuild fixes the problem.)
+
+Note that the frontend users fetching request will become broken in this case, because the enabled module slightly changes the API structure.
+To fix it, open `./reactjs/api/user.js` file and replace `.get('/api/user/user')` with `.get('/api/users')`.
 
 # What is included into this boilerplate?
  
@@ -54,6 +64,25 @@
 - Nice admin theme
 - Other cool features of Contenta CMS out of the box. You should really [check them out](http://contentacms.readthedocs.io/en/latest/)! 
 
+### Automated testing
+
+The boilerplate comes with 3 different types of tests:
+
+- `Unit / Integration tests` for Drupal. This type of tests great for testing of any Drupal specific code. See example in `./tests/unit/example/ExampleTest.php`.
+- `API tests`. This type of tests is used to cover customizations of Drupal API endpoints. For example, custom REST endpoints or modifications of JSON API responses. See example in `./tests/api/example/ExampleCest.php`.
+- `Acceptance tests`. This type of tests emulates real user behavior in a real browser and suited to automate end-to-end testing of project features. See example in `./tests/acceptance/example/ExampleCest.php`.
+
+The coolest part of this set up is that all these tests **have Drupal API support & database connection**. At any point you may query data from Drupal and compare it with the expected behavior.
+
+Here's list of shorthands to run tests locally (make sure all docker containers are up by running `make up` before):
+
+- `make tests:run` - runs all types of tests
+- `make tests:run unit` - runs Unit / Integration tests only
+- `make tests:run api` - runs API tests only
+- `make tests:run acceptance` - runs Acceptance tests only
+- `make tests:run tests/api/example/ExampleCest` - runs all tests from a specified file
+- `make tests:run tests/api/example/ExampleCest::authenticateAdmin` - runs only specified test
+
 # Command list
 
 - `make install` - installs the whole application locally.
@@ -68,3 +97,4 @@
 - `make yarn` - runs yarn inside of node container. Example of use: `make yarn add lodash`.
 - `make code:check` - checks Drupal / React.js coding standards compliance.
 - `make code:fix` - checks Drupal / React.js coding standards compliance and fixes issues if possible.
+- `make tests:run` - runs all types of tests (unit, API, acceptance). If you want to run only 1 type of tests, run `make tests:run acceptance` for example.

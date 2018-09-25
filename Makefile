@@ -5,7 +5,8 @@ install install\:platformsh update \
 db\:dump db\:drop db\:import \
 files\:sync files\:sync\:public files\:sync\:private \
 code\:check code\:fix \
-yarn logs
+yarn logs \
+tests\:prepare tests\:run tests\:cli tests\:autocomplete
 
 # Create local environment files.
 $(shell cp -n \.\/\.docker\/docker-compose\.override\.default\.yml \.\/\.docker\/docker-compose\.override\.yml)
@@ -29,7 +30,7 @@ docker-root = docker-compose exec --user=0:0 $(firstword ${1}) time -f"%E" sh -c
 default: up
 
 pull:
-	$(call message,$(PROJECT_NAME): Updating Docker images...)
+	$(call message,$(PROJECT_NAME): Downloading / updating Docker images...)
 	docker-compose pull
 	docker pull $(DOCKER_PHPCS)
 	docker pull $(DOCKER_ESLINT)
@@ -72,7 +73,7 @@ exec\:root:
 drush:
     # Remove the first argument from the list of make commands.
 	$(eval COMMAND_ARGS := $(filter-out $@,$(MAKECMDGOALS)))
-	$(call docker-www-data, php drush --root=web $(COMMAND_ARGS) --yes)
+	$(call docker-www-data, php drush --root=/var/www/html/web $(COMMAND_ARGS) --yes)
 
 composer:
     # Remove the first argument from the list of make commands.
@@ -84,18 +85,16 @@ composer:
 ########################
 
 prepare\:backend:
-	$(call message,$(PROJECT_NAME): Fixing file permissions...)
-	$(call docker-root, php chown -R wodby: web)
 	$(call message,$(PROJECT_NAME): Installing/updating Drupal (Contenta CMS) dependencies...)
 	-$(call docker-wodby, php composer install --no-suggest)
 	$(call message,$(PROJECT_NAME): Updating permissions for public files...)
-	$(call docker-wodby, php mkdir -p web/sites/default/files)
+	$(call docker-root, php mkdir -p web/sites/default/files)
 	$(call docker-root, php chown -R www-data: web/sites/default/files)
-	$(call docker-wodby, php chmod 666 web/sites/default/settings.php)
+	$(call docker-root, php chmod 666 web/sites/default/settings.php)
 
 prepare\:frontend:
 	$(call message,$(PROJECT_NAME): Installing dependencies for React.js application...)
-	docker-compose run --rm --user=0:0 node yarn install
+	docker-compose run --rm node yarn install
 
 prepare\:platformsh:
 	$(call message,$(PROJECT_NAME): Setting Platform.sh git remote..)
@@ -111,6 +110,11 @@ install:
 	@$(MAKE) -s prepare\:backend
 	$(call docker-www-data, php drush -r /var/www/html/web site-install contenta_jsonapi --existing-config \
 		--db-url=mysql://$(DB_USER):$(DB_PASSWORD)@$(DB_HOST)/$(DB_NAME) --site-name=$(PROJECT_NAME) --account-pass=admin --yes)
+	$(call message,$(PROJECT_NAME): Removing Contenta CMS demo content...)
+	@$(MAKE) -s drush pmu recipes_magazin
+	$(call message,$(PROJECT_NAME): Preparing test suite...)
+	@$(MAKE) -s tests\:prepare
+	@$(MAKE) -s tests\:autocomplete
 	$(call message,$(PROJECT_NAME): The application is ready!)
 
 ######################################################
@@ -248,6 +252,30 @@ yarn:
 logs:
 	$(call message,$(PROJECT_NAME): Streaming the Next.js application logs...)
 	docker-compose logs -f node
+
+##############################
+# Testing framework commands #
+##############################
+
+tests\:prepare:
+	$(call message,$(PROJECT_NAME): Preparing Codeception framework for testing...)
+	docker-compose run --rm codecept build
+
+tests\:run:
+	$(call message,$(PROJECT_NAME): Running Codeception tests...)
+	$(eval ARGS := $(filter-out $@,$(MAKECMDGOALS)))
+	docker-compose run --rm codecept run $(ARGS) --debug
+
+tests\:cli:
+	$(call message,$(PROJECT_NAME): Opening Codeception container CLI...)
+	docker-compose run --rm --entrypoint bash codecept
+
+tests\:autocomplete:
+	$(call message,$(PROJECT_NAME): Copying Codeception codbasee in .codecept folder to enable IDE autocomplete...)
+	docker-compose up -d codecept
+	rm -rf .codecept
+	docker cp $(PROJECT_NAME)_codecept:/repo/ .codecept
+	rm -rf .codecept/.git
 
 # https://stackoverflow.com/a/6273809/1826109
 %:

@@ -13,6 +13,7 @@ $settings['skip_permissions_hardening'] = TRUE;
 // See https://www.drupal.org/node/1992030
 $settings['trusted_host_patterns'] = [
   'docker\.localhost$',
+  'docker\.local$', # Tests specific case.
 ];
 
 // Set writable folder for temp file storage.

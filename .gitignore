@@ -9,3 +9,6 @@
 
 # Environment overrides.
 /.env
+
+# Test suite files for IDE autocomplete.
+.codecept

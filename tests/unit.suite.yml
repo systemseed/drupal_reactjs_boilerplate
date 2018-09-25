@@ -1,0 +1,10 @@
+# Codeception Test Suite Configuration.
+# Suite for unit or integration tests.
+# @see https://codeception.com/docs/05-UnitTests
+actor: UnitTester
+modules:
+  enabled:
+    - Db
+    - Asserts
+    - \Helper\Unit
+    - \Codeception\Module\Drupal8\Drupal8

@@ -7,7 +7,7 @@ services:
 
   mariadb:
     volumes:
-      - ${MYSQL_DATA_DIR}/${MYSQL_DATA_DIR_DRUPAL}:/var/lib/mysql:cached
+      - ${MYSQL_DATA_DIR}:/var/lib/mysql:cached
 
   php:
     environment:
@@ -29,3 +29,9 @@ services:
   nginx:
     volumes:
       - ../drupal:/var/www/html:cached
+
+  codecept:
+    volumes:
+    - ../tests:/project/tests:cached
+    - ../tests/codeception.yml:/project/codeception.yml
+    - ../drupal:/app:ro # Read only.
