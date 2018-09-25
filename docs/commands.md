@@ -1,15 +1,49 @@
 # Command list
 
-- `make install` - installs the whole application locally.
-- `make update` - runs all necessary commands to update your local environment after external changes (switch to another git branch, etc).
-- `make install:platformsh` - if using platform.sh, will install the project from Platform.sh master database and sync files from it to the local environment.
-- `make up` - runs the application in console debug mode.
-- `make stop` - pauses the application.
-- `make down` - completely stops the application and removes docker containers.
-- `make restart` - restarts the application containers.
-- `make drush` - runs drush inside of php container. Example of use: `make drush cr`.
-- `make composer` - runs composer inside of php container. Example of use: `make composer require drupal/fieldable_path`.
-- `make yarn` - runs yarn inside of node container. Example of use: `make yarn add lodash`.
-- `make code:check` - checks Drupal / React.js coding standards compliance.
-- `make code:fix` - checks Drupal / React.js coding standards compliance and fixes issues if possible.
-- `make tests:run` - runs all types of tests (unit, API, acceptance). If you want to run only 1 type of tests, run `make tests:run acceptance` for example.
+Here's short list of all commands available in the project. Below you'll find description for each of those.
+
+- [Docker environment](#docker-environment)
+  - `make up`
+  - `make down`
+  - `make stop`
+  - `make restart`
+  - `make pull`
+- [Project install / update](#project-install-/-update)
+  - `make install`
+  - `make update`
+- [Drupal / PHP](#drupal-/-php)
+  - `make drush`
+  - `make composer`
+- [React.js](#react.js)
+  - `make yarn`
+  - `make logs`
+- [Code quality](#code-quality)
+  - `make code:check`
+  - `make code:fix`
+- [Test suite](#test-suite)
+  - `make tests:run`
+  - `make tests:cli`
+- [Docker containers](#docker-containers)
+  - `make exec`
+  - `make exec:wodby`
+  - `make exec:root`
+- [Platform.sh sugar](#platform.sh-sugar)
+  - `make platform:install`
+  - `make platform:db:dump`
+  - `make platform:files:sync`
+
+## Docker environment
+
+## Project install / update
+
+## Drupal / PHP
+
+## React.js
+
+## Code quality
+
+## Test suite
+
+## Docker containers
+
+## Platform.sh sugar
