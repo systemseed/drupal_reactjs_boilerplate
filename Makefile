@@ -30,7 +30,7 @@ docker-root = docker-compose exec --user=0:0 $(firstword ${1}) time -f"%E" sh -c
 default: up
 
 pull:
-	$(call message,$(PROJECT_NAME): Updating Docker images...)
+	$(call message,$(PROJECT_NAME): Downloading / updating Docker images...)
 	docker-compose pull
 	docker pull $(DOCKER_PHPCS)
 	docker pull $(DOCKER_ESLINT)
