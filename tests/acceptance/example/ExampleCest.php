@@ -3,7 +3,8 @@
 class ExampleCest {
 
   /**
-   * Check that front page is accessible from test suite.
+   * Check that React application front page is accessible and
+   * renders content fetched from Drupal.
    *
    * @param \AcceptanceTester $I
    */
@@ -12,12 +13,12 @@ class ExampleCest {
     $I->amOnPage('/');
     $I->see('Home page is working!');
 
-    $I->wantTo('Make sure admin user data was pulled from Drupal');
+    $I->wantTo('Make sure admin user data can be fetched from Drupal');
     $I->see('admin');
   }
 
   /**
-   * Check that backend is accessible from the test suite.
+   * Check that backend is accessible and user can log in.
    *
    * @param \AcceptanceTester $I
    */
@@ -31,5 +32,13 @@ class ExampleCest {
     $I->amGoingTo('Log in on the backend as administrator');
     $I->amOnUrl($backend_url);
     $I->see('Log in');
+
+    // You can use Drupal API and database connection here as well!
+    $account = \Drupal\user\Entity\User::load(1);
+
+    $I->fillField('input[name="name"]', $account->getAccountName());
+    $I->fillField('input[name="pass"]', 'admin');
+    $I->click('input[type="submit"]');
+    $I->see('Log out');
   }
 }
