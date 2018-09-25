@@ -73,7 +73,7 @@ exec\:root:
 drush:
     # Remove the first argument from the list of make commands.
 	$(eval COMMAND_ARGS := $(filter-out $@,$(MAKECMDGOALS)))
-	$(call docker-www-data, php drush --root=web $(COMMAND_ARGS) --yes)
+	$(call docker-www-data, php drush --root=/var/www/html/web $(COMMAND_ARGS) --yes)
 
 composer:
     # Remove the first argument from the list of make commands.
