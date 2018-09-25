@@ -15,9 +15,12 @@ jobs:
           command: sudo chown ubuntu:ubuntu -R *
 
       - run:
+          name: Download Docker images
+          command: make pull
+
+      - run:
           name: Prepare local environment file
           command: |
-            make prepare
             # The project setup is Mac by default, so we need to change to Linux image.
             # Uncomment all the strings containing `PHP_TAG`.
             sed -i '/PHP_TAG/s/^# //g' \.env
