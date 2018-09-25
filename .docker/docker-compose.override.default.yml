@@ -7,7 +7,7 @@ services:
 
   mariadb:
     volumes:
-      - ${MYSQL_DATA_DIR}/${MYSQL_DATA_DIR_DRUPAL}:/var/lib/mysql:cached
+      - ${MYSQL_DATA_DIR}:/var/lib/mysql:cached
 
   php:
     environment:
