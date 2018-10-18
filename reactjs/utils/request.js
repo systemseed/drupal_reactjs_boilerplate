@@ -23,6 +23,7 @@ superagent
   // gets to the right place despite of being executed on
   // the server or client level.
   .use(prefix)
+  .withCredentials()
   // Default headers for JSON API integration in Drupal.
   .set('Content-Type', 'application/vnd.api+json')
   .set('Accept', 'application/vnd.api+json');
