@@ -7,13 +7,22 @@ import HtmlHead from '../components/01_atoms/HtmlHead';
 import configureStore from '../store/store';
 import ErrorMessage from '../components/01_atoms/ErrorMessage';
 import SiteLayout from '../components/04_templates/GlobalLayout';
+import superagent from '../utils/request';
 import '../components/01_atoms/PageProgressBar'; // Beautiful page transition indicator.
 
 class Application extends App {
   static async getInitialProps({ Component, res, ctx }) {
-    const initialProps = {
+    let initialProps = {
       isServer: !!ctx.req,
     };
+
+    // If server request, then add cookies to the superagent object.
+    if (ctx.req) {
+      superagent.set('Cookie', ctx.req.headers.cookie);
+    }
+
+    // Add superagent to the global initial props object.
+    initialProps.superagent = superagent;
 
     // Call to getInitialProps() from the Page component.
     if (Component.getInitialProps) {

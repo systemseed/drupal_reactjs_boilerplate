@@ -4,7 +4,7 @@ import { Container, Row, Col } from 'reactstrap';
 import * as userApi from '../api/user';
 
 class HomePage extends React.Component {
-  static async getInitialProps() {
+  static async getInitialProps({ superagent }) {
     let initialProps = {
       users: [],
       statusCode: 200,
@@ -12,7 +12,7 @@ class HomePage extends React.Component {
 
     try {
       // Load all users from the backend.
-      initialProps = await userApi.getAll();
+      initialProps = await userApi.getAll(superagent);
     } catch (e) {
       // Pass status code as internal properly. It is being checked inside of
       // render() method of _app.js.
