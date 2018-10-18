@@ -12,7 +12,7 @@ import '../components/01_atoms/PageProgressBar'; // Beautiful page transition in
 
 class Application extends App {
   static async getInitialProps({ Component, res, ctx }) {
-    let initialProps = {
+    const initialProps = {
       isServer: !!ctx.req,
     };
 

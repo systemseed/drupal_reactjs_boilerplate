@@ -5,7 +5,7 @@ import * as transforms from '../utils/transforms';
  *
  * @returns {Promise<any>}
  */
-export const getAll = (superagent) => new Promise((resolve, reject) => {
+export const getAll = superagent => new Promise((resolve, reject) => {
   superagent
     .get('/api/user/user')
     .query({
