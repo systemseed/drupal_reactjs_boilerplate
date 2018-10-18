@@ -1,4 +1,3 @@
-import request from '../utils/request';
 import * as transforms from '../utils/transforms';
 
 /**
@@ -6,8 +5,8 @@ import * as transforms from '../utils/transforms';
  *
  * @returns {Promise<any>}
  */
-export const getAll = () => new Promise((resolve, reject) => {
-  request
+export const getAll = (superagent) => new Promise((resolve, reject) => {
+  superagent
     .get('/api/user/user')
     .query({
       'fields[user--user]': 'id,name',
