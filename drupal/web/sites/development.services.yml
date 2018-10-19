@@ -4,14 +4,6 @@
 # 'example.settings.local.php' file, which sits next to this file.
 parameters:
   http.response.debug_cacheability_headers: true
-  cors.config:
-    enabled: true
-    allowedHeaders: ['x-csrf-token', 'authorization', 'content-type', 'accept', 'origin', 'x-requested-with', 'x-consumer-id']
-    allowedMethods: ['*']
-    allowedOrigins: ['http://app.docker.localhost']
-    exposedHeaders: false
-    maxAge: false
-    supportsCredentials: true
 services:
   cache.backend.null:
     class: Drupal\Core\Cache\NullBackendFactory
