@@ -18,7 +18,9 @@ class Application extends App {
 
     // If server request, then add cookies to the superagent object.
     if (ctx.req) {
-      superagent.set('Cookie', ctx.req.headers.cookie);
+      if (typeof ctx.req.headers.cookie !== 'undefined') {
+        superagent.set('Cookie', ctx.req.headers.cookie);
+      }
     }
 
     // Add superagent to the global initial props object.
