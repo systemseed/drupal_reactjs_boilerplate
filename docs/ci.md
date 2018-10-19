@@ -1,3 +1,3 @@
-# Continues Integration / Deployment
+# Continuous Integration / Deployment
 
 TODO
