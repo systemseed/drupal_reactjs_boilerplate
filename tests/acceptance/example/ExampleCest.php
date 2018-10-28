@@ -15,6 +15,10 @@ class ExampleCest {
 
     $I->wantTo('Make sure admin user data can be fetched from Drupal');
     $I->see('admin');
+
+    $I->wantTo('Make sure API requests work from client side.');
+    $I->click('Home');
+    $I->see('admin');
   }
 
   /**
