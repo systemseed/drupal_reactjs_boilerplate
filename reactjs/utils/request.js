@@ -5,11 +5,14 @@ import superagentPrefix from 'superagent-prefix';
 import getConfig from 'next/config';
 
 const {
-  publicRuntimeConfig: { BACKEND_URL },
+  publicRuntimeConfig: { BACKEND_URL, TESTS_BACKEND_URL },
   serverRuntimeConfig: { HTTP_AUTH_USER, HTTP_AUTH_PASS },
 } = getConfig();
 
-const prefix = superagentPrefix(BACKEND_URL);
+// flag for whether or not frontend is running in test environment
+const isLocalRequest = typeof window !== 'undefined' && window.location.hostname.split('.').pop() === 'local';
+
+const prefix = superagentPrefix(isLocalRequest ? TESTS_BACKEND_URL : BACKEND_URL);
 
 // Get superagent object & make it ready to set some default values.
 // Make superagent library know how to handle JSON API responses &

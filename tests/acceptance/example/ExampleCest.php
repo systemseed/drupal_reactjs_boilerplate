@@ -15,6 +15,10 @@ class ExampleCest {
 
     $I->wantTo('Make sure admin user data can be fetched from Drupal');
     $I->see('admin');
+
+    $I->wantTo('Make sure that navigating to Home works');
+    $I->click('nav a.nav-link[href="/"]');
+    $I->see('Home page is working!');
   }
 
   /**
