@@ -18,7 +18,7 @@ class ExampleCest {
 
     $I->wantTo('Make sure that navigating to Home works');
     $I->click('nav a.nav-link[href="/"]');
-    $I->see('Home page is working!');
+    $I->see('admin');
   }
 
   /**

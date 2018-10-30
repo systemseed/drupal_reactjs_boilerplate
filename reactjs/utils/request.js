@@ -9,9 +9,15 @@ const {
   serverRuntimeConfig: { HTTP_AUTH_USER, HTTP_AUTH_PASS },
 } = getConfig();
 
-// flag for whether or not frontend is running in test environment
+// Flag for whether or not frontend is running in test environment.
 const isLocalRequest = typeof window !== 'undefined' && window.location.hostname.split('.').pop() === 'local';
 
+// Sets up superagent to use either the standard location
+// (with '.localhost' domain) or the one for testing ('.local').
+// This distinction is primarily due to Chrome browser's inability to map
+// localhost to anything other than the physical local machine, giving rise to
+// issues when running in a Docker container.
+// Also see comments on these variables as defined in reactjs/.env .
 const prefix = superagentPrefix(isLocalRequest ? TESTS_BACKEND_URL : BACKEND_URL);
 
 // Get superagent object & make it ready to set some default values.
