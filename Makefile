@@ -1,9 +1,9 @@
 .PHONY: default pull up stop down restart \
 exec exec\:wodby exec\:root drush composer \
 prepare\:backend prepare\:frontend prepare\:platformsh \
-install install\:platformsh update \
+install platform\:install update \
 db\:dump db\:drop db\:import \
-files\:sync files\:sync\:public files\:sync\:private \
+platform\:files\:sync platform\:files\:sync\:public platform\:files\:sync\:private \
 code\:check code\:fix \
 yarn logs \
 tests\:prepare tests\:run tests\:cli tests\:autocomplete
@@ -121,13 +121,13 @@ install:
 # Installation from existing Platform.sh environment #
 ######################################################
 
-install\:platformsh:
+platform\:install:
 	@$(MAKE) -s prepare\:platformsh
 	@$(MAKE) -s prepare\:frontend
 	@$(MAKE) -s up
 	@$(MAKE) -s prepare\:backend
-	@$(MAKE) -s files\:sync
-	@$(MAKE) -s db\:dump
+	@$(MAKE) -s platform\:files\:sync
+	@$(MAKE) -s platform\:db\:dump
 	@$(MAKE) -s db\:import
 	@$(MAKE) -s update
 	$(call message,$(PROJECT_NAME): The application is ready!)
@@ -153,7 +153,7 @@ update:
 # Database operations #
 #######################
 
-db\:dump:
+platform\:db\:dump:
 	$(call message,$(PROJECT_NAME): Creating DB dump from Platform.sh...)
 	mkdir -p $(BACKUP_DIR)
 	-platform db:dump -y --project=$(PLATFORM_PROJECT_ID) --environment=$(PLATFORM_ENVIRONMENT) --app=$(PLATFORM_APPLICATION_BACKEND) --relationship=$(PLATFORM_RELATIONSHIP_BACKEND) --gzip --file=$(BACKUP_DIR)/$(DB_DUMP_NAME).sql.gz
@@ -171,11 +171,11 @@ db\:import:
 # Files operations #
 ####################
 
-files\:sync:
-	@$(MAKE) -s files\:sync\:public
-	@$(MAKE) -s files\:sync\:private
+platform\:files\:sync:
+	@$(MAKE) -s platform\:files\:sync\:public
+	@$(MAKE) -s platform\:files\:sync\:private
 
-files\:sync\:public:
+platform\:files\:sync\:public:
 	$(call message,$(PROJECT_NAME): Creating public files directory...)
 	$(call docker-wodby, php mkdir -p web/sites/default/files)
 
@@ -190,7 +190,7 @@ files\:sync\:public:
 	$(call message,$(PROJECT_NAME): Changing public files ownership to www-data...)
 	$(call docker-root, php chown -R www-data: web/sites/default/files)
 
-files\:sync\:private:
+platform\:files\:sync\:private:
 	$(call message,$(PROJECT_NAME): Creating private files directory...)
 	$(call docker-wodby, php mkdir -p web/private)
 
