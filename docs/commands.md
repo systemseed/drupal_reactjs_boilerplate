@@ -46,4 +46,3 @@ Here's short list of all commands available in the project. Below you'll find de
 
 ## Docker containers
 
-## Platform.sh sugar
