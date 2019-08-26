@@ -1,3 +1,0 @@
-# Platform.sh integration
-
-TODO

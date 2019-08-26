@@ -11,18 +11,10 @@ jobs:
       - checkout
 
       - run:
-          name: Fix circleci files permissons
-          command: sudo chown ubuntu:ubuntu -R *
-
-      - run:
-          name: Change used PHP Docker image to the Linux specific one
+          name: Fix CircleCI files permissions
           command: |
-            make prepare
-            # The project setup is Mac by default, so we need to change to Linux image.
-            # Uncomment all the strings containing `PHP_TAG`.
-            sed -i '/PHP_TAG/s/^# //g' \.env
-            # Comment all the strings containing `-dev-macos-`.
-            sed -i '/-dev-macos-/s/^/# /g' \.env
+            sudo chown ubuntu:ubuntu -R *
+            sudo chown ubuntu:ubuntu -R .[!.]*
 
       - run:
           name: Download Docker images
@@ -31,7 +23,6 @@ jobs:
       - run:
           name: Install the whole application locally
           command: make install
-          no_output_timeout: 20m
 
       - run:
           name: Check Drupal & React.js code for compliance with coding standards

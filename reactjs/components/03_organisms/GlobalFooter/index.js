@@ -1,14 +1,9 @@
 import './_style.scss';
 import React from 'react';
-import { Container, Row, Col } from 'reactstrap';
 
 const GlobalFooter = () => (
   <footer>
-    <Container>
-      <Row>
-        <Col />
-      </Row>
-    </Container>
+    Some example footer content.
   </footer>
 );
 

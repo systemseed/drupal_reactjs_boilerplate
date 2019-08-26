@@ -11,14 +11,20 @@ class ExampleCest {
   public function viewFrontend(AcceptanceTester $I) {
     $I->amGoingTo('Make sure that React.js application is working');
     $I->amOnPage('/');
-    $I->see('Home page is working!');
+    $I->waitForText('Home page is working!');
 
-    $I->wantTo('Make sure admin user data can be fetched from Drupal');
-    $I->see('admin');
+    $I->wantTo('Make sure articles user data can be fetched from Drupal');
+
+    // Get article from Drupal backend.
+    $articles = \Drupal::entityTypeManager()
+      ->getStorage('node')
+      ->loadByProperties(['type' => 'article']);
+    $article = array_shift($articles);
+    $I->waitForText($article->label());
 
     $I->wantTo('Make sure that navigating to Home works');
-    $I->click('nav a.nav-link[href="/"]');
-    $I->see('admin');
+    $I->click('a.nav-link[href="/"]');
+    $I->waitForText($article->label());
   }
 
   /**
@@ -34,7 +40,7 @@ class ExampleCest {
     }
 
     $I->amGoingTo('Log in on the backend as administrator');
-    $I->amOnUrl($backend_url);
+    $I->amOnUrl($backend_url . '/user');
     $I->see('Log in');
 
     // You can use Drupal API and database connection here as well!

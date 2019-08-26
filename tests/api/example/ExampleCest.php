@@ -3,6 +3,7 @@
 namespace jsonapi;
 
 use Codeception\Util\HttpCode;
+use Drupal\node\Entity\Node;
 use Drupal\user\Entity\User;
 
 /**
@@ -60,30 +61,37 @@ class ExampleCest {
   }
 
   /**
-   * Checks that anonymous user can view users info.
+   * Checks that anonymous user can view articles.
    *
    * @param \ApiTester $I
    */
-  public function accessJsonApiUserData(\ApiTester $I) {
+  public function accessJsonApiArticlesData(\ApiTester $I) {
     $path_prefix = \Drupal::config('jsonapi_extras.settings')
       ->get('path_prefix');
 
-    $I->amGoingTo('Send request to the JSON API user endpoint.');
-    $I->sendGET("/$path_prefix/user/user");
+    $I->amGoingTo('Send request to the JSON API articles endpoint.');
+    $I->sendGET("/$path_prefix/articles");
 
     $I->expectTo('See successful response.');
     $I->seeResponseCodeIs(HttpCode::OK);
 
     // Load admin user data from Drupal database and make sure it
     // exists in the response.
-    $I->expectTo('Find admin user data in the response.');
-    $account = User::load(1);
+    $I->expectTo('Find article data in the response.');
+
+    // Get article from Drupal backend.
+    $articles = \Drupal::entityTypeManager()
+      ->getStorage('node')
+      ->loadByProperties(['type' => 'article']);
+    $article = array_shift($articles);
+
     $I->seeResponseContainsJson(
       [
-        'attributes' => [
-          'uid' => $account->id(),
-          'name' => $account->getAccountName()
-        ]
+        'data' => [
+          [
+            'id' => $article->uuid(),
+          ],
+        ],
       ]
     );
   }

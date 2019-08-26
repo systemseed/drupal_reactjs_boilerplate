@@ -13,11 +13,9 @@
 - Server Side rendering support (the application is based on [Next.js](https://github.com/zeit/next.js/))
 - Support of `.scss` files per component. The application will automatically add compiled `.css` file for each page with styles from components used for the page.
 - Live reloading for any `css` / `js` changes
-- Mobile ready navigation menu
 - Opinionated code style pattern based on Airbnb's work. Just run `make code:check` to get the frontend code checked against coding standards.
 - Configured `Redux` + `Redux saga` with example
 - Configured `robots.txt` file
-- Included `Bootstrap 4` support (can be easily removed if necessary)
 - Beautiful page transition indicator
 
 ### Backend

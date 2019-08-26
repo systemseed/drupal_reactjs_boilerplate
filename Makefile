@@ -10,16 +10,20 @@ tests\:prepare tests\:run tests\:cli tests\:autocomplete
 
 # Create local environment files.
 $(shell cp -n \.\/\.docker\/docker-compose\.override\.default\.yml \.\/\.docker\/docker-compose\.override\.yml)
-$(shell cp -n \.env\.default \.env)
-$(shell cp -n \.env\.default \.\/reactjs\/\.env)
+# If .env file doesn't exist yet - copy it from the default one.
+# Then if OS is Linux we change the PHP_TAG:
+#  - uncomment all the strings containing 'PHP_TAG'
+#  - comment all the strings containing 'PHP_TAG' and '-dev-macos-'
+$(shell ! test -e \.env && cp \.env\.default \.env && uname -s | grep -q 'Linux' && sed -i '/PHP_TAG/s/^# //g' \.env && sed -i -E '/PHP_TAG.+-dev-macos-/s/^/# /g' \.env)
+
 include .env
 
 # Define function to highlight messages.
 # @see https://gist.github.com/leesei/136b522eb9bb96ba45bd
-cyan = \033[38;5;6m
+yellow = \033[38;5;3m
 bold = \033[1m
 reset = \033[0m
-message = @echo "${cyan}${bold}${1}${reset}"
+message = @echo "${yellow}${bold}${1}${reset}"
 
 # Define 3 users with different permissions within the container.
 # docker-www-data is applicable only for php container.
@@ -37,7 +41,7 @@ pull:
 
 up:
 	$(call message,$(PROJECT_NAME): Starting Docker containers...)
-	docker-compose up -d --remove-orphans
+	docker-compose up -d --remove-orphans --scale codecept=0
 
 stop:
 	$(call message,$(PROJECT_NAME): Stopping Docker containers...)
@@ -108,10 +112,9 @@ install:
 	@$(MAKE) -s prepare\:frontend
 	@$(MAKE) -s up
 	@$(MAKE) -s prepare\:backend
-	$(call docker-www-data, php drush -r /var/www/html/web site-install contenta_jsonapi --existing-config \
+	$(call message,$(PROJECT_NAME): Installing Contenta CMS...)
+	$(call docker-www-data, php drush -r /var/www/html/web site-install contenta_jsonapi \
 		--db-url=mysql://$(DB_USER):$(DB_PASSWORD)@$(DB_HOST)/$(DB_NAME) --site-name=$(PROJECT_NAME) --account-pass=admin --yes)
-	$(call message,$(PROJECT_NAME): Removing Contenta CMS demo content...)
-	@$(MAKE) -s drush pmu recipes_magazin
 	$(call message,$(PROJECT_NAME): Preparing test suite...)
 	@$(MAKE) -s tests\:prepare
 	@$(MAKE) -s tests\:autocomplete
