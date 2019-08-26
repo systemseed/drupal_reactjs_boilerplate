@@ -1,4 +1,0 @@
-access_token_expiration: 300
-refresh_token_expiration: 870000
-public_key: ../keys/public.key
-private_key: ../keys/private.key

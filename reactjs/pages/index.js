@@ -1,18 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Container, Row, Col } from 'reactstrap';
-import * as userApi from '../api/user';
+import * as articleApi from '../api/article';
 
 class HomePage extends React.Component {
-  static async getInitialProps({ superagent }) {
+  static async getInitialProps() {
     let initialProps = {
-      users: [],
+      articles: [],
       statusCode: 200,
     };
 
     try {
-      // Load all users from the backend.
-      initialProps = await userApi.getAll(superagent);
+      // Load all articles from the backend.
+      initialProps = await articleApi.getAll();
     } catch (e) {
       // Pass status code as internal properly. It is being checked inside of
       // render() method of _app.js.
@@ -23,32 +22,28 @@ class HomePage extends React.Component {
   }
 
   render() {
-    const { users } = this.props;
+    const { articles } = this.props;
     return (
-      <Container>
-        <Row>
-          <Col>
-            Home page is working!<br />
-            List of users from Drupal:<br />
-            <ul>
-              {users.map(user => <li key={user.id}>{user.name} (id: {user.id})</li>)}
-            </ul>
-          </Col>
-        </Row>
-      </Container>
+      <div>
+            Home page is working!<br /><br />
+            List of articles from Drupal:<br />
+        <ul>
+          {articles.map((article) => <li key={article.id}>{article.title} (id: {article.id})</li>)}
+        </ul>
+      </div>
     );
   }
 }
 
 HomePage.propTypes = {
-  users: PropTypes.arrayOf(PropTypes.shape({
-    name: PropTypes.string,
+  articles: PropTypes.arrayOf(PropTypes.shape({
+    title: PropTypes.string,
     id: PropTypes.string,
   })),
 };
 
 HomePage.defaultProps = {
-  users: [],
+  articles: [],
 };
 
 export default HomePage;

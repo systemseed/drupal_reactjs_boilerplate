@@ -112,10 +112,9 @@ install:
 	@$(MAKE) -s prepare\:frontend
 	@$(MAKE) -s up
 	@$(MAKE) -s prepare\:backend
-	$(call docker-www-data, php drush -r /var/www/html/web site-install contenta_jsonapi --existing-config \
-		--db-url=mysql://$(DB_USER):$(DB_PASSWORD)@$(DB_HOST)/$(DB_NAME) --site-name=$(PROJECT_NAME) --account-pass=admin --yes)
-	$(call message,$(PROJECT_NAME): Removing Contenta CMS demo content...)
-	@$(MAKE) -s drush pmu recipes_magazin
+	$(call message,$(PROJECT_NAME): Installing Contenta CMS...)
+	#$(call docker-www-data, php drush -r /var/www/html/web site-install contenta_jsonapi \
+#		--db-url=mysql://$(DB_USER):$(DB_PASSWORD)@$(DB_HOST)/$(DB_NAME) --site-name=$(PROJECT_NAME) --account-pass=admin --yes)
 	$(call message,$(PROJECT_NAME): Preparing test suite...)
 	@$(MAKE) -s tests\:prepare
 	@$(MAKE) -s tests\:autocomplete

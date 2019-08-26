@@ -1,10 +1,10 @@
 /**
- * Transforms backend user data into frontend readable one.
+ * Transforms backend article data into frontend readable one.
  *
  * @param data
  * @returns {{}}
  */
-export const user = data => ({
-  name: data.name,
+export const article = (data) => ({
+  title: data.title,
   id: data.id,
 });

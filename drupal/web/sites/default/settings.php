@@ -14,7 +14,13 @@ $settings['file_scan_ignore_directories'] = [
 ];
 
 $settings['install_profile'] = 'contenta_jsonapi';
-$config_directories[CONFIG_SYNC_DIRECTORY] = '../config/sync';
+
+// Set config sync directory to Contenta CMS by default.
+// During the development you may want to export all the configs alongside with
+// your changes. So you'll need to change the line below to this:
+// $config_directories[CONFIG_SYNC_DIRECTORY] = '../config/sync';
+// and then run `make drush cex`.
+$config_directories[CONFIG_SYNC_DIRECTORY] = 'profiles/contrib/contenta_jsonapi/config/sync';
 
 // Default development settings.
 // They are overriden in settings.env_production.php.

@@ -5,7 +5,7 @@ const nextjs = require('next');
 const dotenv = require('dotenv');
 const routes = require('./routes');
 
-// Import variables from local .env file.
+// Import variables from local .env file if exists.
 dotenv.config();
 
 const port = process.env.PORT || 3000;

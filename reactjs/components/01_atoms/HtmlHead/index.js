@@ -1,6 +1,5 @@
 import React from 'react';
 import Head from 'next/head';
-import '../../../node_modules/bootstrap/scss/bootstrap.scss';
 
 const HtmlHead = () => (
   <Head>

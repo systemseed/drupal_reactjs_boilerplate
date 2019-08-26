@@ -1,26 +1,13 @@
 # Installation
 
-1. The boilerplate is set to serve Mac users by default. So if you use **macOS** then after git clone, simply call
+1. To get everything installed locally, simply use the following commands:
 
     ```
     cd drupal_reactjs_boilerplate
     make install
     ```
 
-2. If you use **Linux**, then
-
-    ```
-    cd drupal_reactjs_boilerplate
-    make prepare
-    ```
-    
-    This will generate local environment files. Edit the created `.env` file in the root of the project and uncomment `PHP_TAG` version for Linux. And finally
-    
-    ```
-    make install
-    ```
-
-3. That's it, the decoupled application is ready! 
+2. That's it, the Decoupled application is ready for development! 
 
 # Access the applications
 
@@ -29,10 +16,4 @@
 
 # Demo content
 
-This boilerplate comes ready for the development by default, therefore all demo content is disabled. However, if you want to explore demo content from Contenta CMS, you need to enable `Recipes Magazin` module:
-
-- `make drush en recipes_magazin`
-- `make drush cr` (that's not needed usually, but JSON API endpoints becomes not available after module's install. Cache rebuild fixes the problem.)
-
-Note that the frontend users fetching request will become broken in this case, because the enabled module slightly changes the structure of API endpoints.
-To fix it, open `./reactjs/api/user.js` file and replace `.get('/api/user/user')` with `.get('/api/users')`.
+This boilerplate comes as an example of integration between frontend and backend applications, therefore all demo content is enabled by default. However, if you want to get rid of it and focus on development - all you need to do is to delete the module with demo content by calling `make drush pmu recipes_magazin`.
