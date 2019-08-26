@@ -10,8 +10,12 @@ tests\:prepare tests\:run tests\:cli tests\:autocomplete
 
 # Create local environment files.
 $(shell cp -n \.\/\.docker\/docker-compose\.override\.default\.yml \.\/\.docker\/docker-compose\.override\.yml)
-$(shell cp -n \.env\.default \.env)
-$(shell cp -n \.env\.default \.\/reactjs\/\.env)
+# If .env file doesn't exist yet - copy it from the default one.
+# Then if OS is Linux we change the PHP_TAG:
+#  - uncomment all the strings containing 'PHP_TAG'
+#  - comment all the strings containing 'PHP_TAG' and '-dev-macos-'
+$(shell ! test -e \.env && cp \.env\.default \.env && uname -s | grep -q 'Linux' && sed -i '/PHP_TAG/s/^# //g' \.env && sed -i -E '/PHP_TAG.+-dev-macos-/s/^/# /g' \.env)
+
 include .env
 
 # Define function to highlight messages.
@@ -37,7 +41,7 @@ pull:
 
 up:
 	$(call message,$(PROJECT_NAME): Starting Docker containers...)
-	docker-compose up -d --remove-orphans
+	docker-compose up -d --remove-orphans --scale codecept=0
 
 stop:
 	$(call message,$(PROJECT_NAME): Stopping Docker containers...)
