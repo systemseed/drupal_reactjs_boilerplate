@@ -54,7 +54,7 @@ services:
       - 'traefik.frontend.rule=Host:${BACKEND_HOST}, ${TESTS_BACKEND_HOST}'
 
   traefik:
-    image: traefik
+    image: traefik:1.7.16
     container_name: "${PROJECT_NAME}_traefik"
     command: -c /dev/null --web --docker --logLevel=INFO
     ports:
