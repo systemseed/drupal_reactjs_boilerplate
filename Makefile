@@ -20,10 +20,11 @@ include .env
 
 # Define function to highlight messages.
 # @see https://gist.github.com/leesei/136b522eb9bb96ba45bd
+# "@echo -p [...]" allow print with color on archlinux
 yellow = \033[38;5;3m
 bold = \033[1m
 reset = \033[0m
-message = @echo "${yellow}${bold}${1}${reset}"
+message = @echo -p "${yellow}${bold}${1}${reset}"
 
 # Define 3 users with different permissions within the container.
 # docker-www-data is applicable only for php container.
