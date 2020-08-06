@@ -1,0 +1,12 @@
+diff --git a/config/sync/core.extension.yml b/config/sync/core.extension.yml
+index e61dbcc..fe1984c 100644
+--- a/config/sync/core.extension.yml
++++ b/config/sync/core.extension.yml
+@@ -39,6 +39,7 @@ module:
+   options: 0
+   page_cache: 0
+   path: 0
++  path_alias: 0
+   rdf: 0
+   responsive_image: 0
+   rest: 0

@@ -10,11 +10,6 @@
             "role": "Developer"
         },
         {
-            "name": "Andrew Berezovsky",
-            "email": "andrew@systemseed.com",
-            "role": "Developer"
-        },
-        {
             "name": "Kate Marshalkina",
             "email": "kate@systemseed.com",
             "role": "Developer"
@@ -27,14 +22,14 @@
         }
     ],
     "require": {
-        "contentacms/contenta_jsonapi": "^3.0",
         "drupal-composer/drupal-scaffold": "^2.5",
         "cweagans/composer-patches": "^1.6",
         "vlucas/phpdotenv": "^2.4",
         "drush/drush": "^9.0.0",
         "composer/installers": "^1.2",
         "webflo/drupal-finder": "^1.0.0",
-        "webmozart/path-util": "^2.3"
+        "webmozart/path-util": "^2.3",
+        "contentacms/contenta_jsonapi": "^3.0"
     },
     "require-dev": {
     },
@@ -74,7 +69,11 @@
             "omit-defaults": false
         },
         "enable-patching": true,
-        "patches": {}
+        "patches": {
+            "contentacms/contenta_jsonapi": {
+                "Fixed issue with the profile installation": "patches/contenta_jsonapi_fix_path_alias.patch"
+            }
+        }
     },
     "config": {
         "preferred-install": {

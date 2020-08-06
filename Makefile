@@ -28,9 +28,9 @@ message = @echo -p "${yellow}${bold}${1}${reset}"
 
 # Define 3 users with different permissions within the container.
 # docker-www-data is applicable only for php container.
-docker-www-data = docker-compose exec --user=82:82 $(firstword ${1}) time -f"%E" sh -c "$(filter-out $(firstword ${1}), ${1})"
-docker-wodby = docker-compose exec $(firstword ${1}) time -f"%E" sh -c "$(filter-out $(firstword ${1}), ${1})"
-docker-root = docker-compose exec --user=0:0 $(firstword ${1}) time -f"%E" sh -c "$(filter-out $(firstword ${1}), ${1})"
+docker-www-data = docker-compose exec --user=82:82 $(firstword ${1}) sh -c "$(filter-out $(firstword ${1}), ${1})"
+docker-wodby = docker-compose exec $(firstword ${1}) sh -c "$(filter-out $(firstword ${1}), ${1})"
+docker-root = docker-compose exec --user=0:0 $(firstword ${1}) sh -c "$(filter-out $(firstword ${1}), ${1})"
 
 default: up
 
@@ -78,7 +78,7 @@ exec\:root:
 drush:
     # Remove the first argument from the list of make commands.
 	$(eval COMMAND_ARGS := $(filter-out $@,$(MAKECMDGOALS)))
-	$(call docker-www-data, php drush --root=/var/www/html/web $(COMMAND_ARGS) --yes)
+	$(call docker-www-data, php drush $(COMMAND_ARGS) --yes)
 
 composer:
     # Remove the first argument from the list of make commands.
@@ -114,8 +114,7 @@ install:
 	@$(MAKE) -s up
 	@$(MAKE) -s prepare\:backend
 	$(call message,$(PROJECT_NAME): Installing Contenta CMS...)
-	$(call docker-www-data, php drush -r /var/www/html/web site-install contenta_jsonapi \
-		--db-url=mysql://$(DB_USER):$(DB_PASSWORD)@$(DB_HOST)/$(DB_NAME) --site-name=$(PROJECT_NAME) --account-pass=admin --yes)
+	$(call docker-www-data, php drush site-install contenta_jsonapi --site-name=$(PROJECT_NAME) --account-pass=admin --yes)
 	$(call message,$(PROJECT_NAME): Preparing test suite...)
 	@$(MAKE) -s tests\:prepare
 	@$(MAKE) -s tests\:autocomplete
