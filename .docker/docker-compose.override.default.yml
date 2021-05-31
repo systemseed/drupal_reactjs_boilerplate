@@ -1,18 +1,8 @@
 version: '3'
 services:
 
-  node:
-    volumes:
-      - ../reactjs:/app:cached
-
-  mariadb:
-    volumes:
-      - ${MYSQL_DATA_DIR}:/var/lib/mysql:cached
-
   php:
-    environment:
-      TEST_USERS_PASSWORD: ${TEST_USERS_PASSWORD}
-      ENVIRONMENT: ${ENVIRONMENT}
+#    environment:
 ## Read instructions at https://docs.wodby.com/stacks/php/containers/#xdebug-local
 #      PHP_XDEBUG: 1
 #      PHP_XDEBUG_DEFAULT_ENABLE: 1
@@ -22,16 +12,3 @@ services:
 #      PHP_XDEBUG_REMOTE_HOST: 172.17.0.1 # Linux, Docker < 18.03
 #      PHP_XDEBUG_REMOTE_HOST: 10.254.254.254 # macOS, Docker < 18.03
 #      PHP_XDEBUG_REMOTE_HOST: 10.0.75.1 # Windows, Docker < 18.03
-    volumes:
-      - ../drupal:/var/www/html:cached
-      - ../${BACKUP_DIR}:/var/www/html/${BACKUP_DIR}:cached
-
-  nginx:
-    volumes:
-      - ../drupal:/var/www/html:cached
-
-  codecept:
-    volumes:
-    - ../tests:/project/tests:cached
-    - ../tests/codeception.yml:/project/codeception.yml
-    - ../drupal:/app:ro # Read only.

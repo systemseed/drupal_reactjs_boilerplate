@@ -3,7 +3,7 @@
 
 ### What is this project for?
 
-The main purpose of the project is to provide a super-quick start for decoupled applications development based on **Drupal 8** and **React.js**.
+The main purpose of the project is to provide a super-quick start for fully decoupled applications development based on **Drupal 8** and **React**.
 
 Our main goal was to create the boilerplate with minimal amount of opinionated set of features, but at the same time give developers a solid base for start to let them focus on the development and do not worry about infrastructure / integrations set up. 
 

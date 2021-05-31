@@ -5,7 +5,7 @@ install platform\:install update \
 db\:dump db\:drop db\:import \
 platform\:files\:sync platform\:files\:sync\:public platform\:files\:sync\:private \
 code\:check code\:fix \
-yarn logs \
+npm logs \
 tests\:prepare tests\:run tests\:cli tests\:autocomplete
 
 # Create local environment files.
@@ -50,7 +50,7 @@ stop:
 
 down:
 	$(call message,$(PROJECT_NAME): Removing Docker network & containers...)
-	docker-compose down -v --remove-orphans
+	docker-compose down --remove-orphans
 
 restart:
 	$(call message,$(PROJECT_NAME): Restarting Docker containers...)
@@ -91,7 +91,7 @@ composer:
 
 prepare\:backend:
 	$(call message,$(PROJECT_NAME): Installing/updating Drupal (Contenta CMS) dependencies...)
-	-$(call docker-wodby, php composer install --no-suggest)
+	-$(call docker-wodby, php composer install)
 	$(call message,$(PROJECT_NAME): Updating permissions for public files...)
 	$(call docker-root, php mkdir -p web/sites/default/files)
 	$(call docker-root, php chown -R www-data: web/sites/default/files)
@@ -99,7 +99,7 @@ prepare\:backend:
 
 prepare\:frontend:
 	$(call message,$(PROJECT_NAME): Installing dependencies for React.js application...)
-	docker-compose run --rm node yarn install
+	docker-compose run --rm node npm install
 
 prepare\:platformsh:
 	$(call message,$(PROJECT_NAME): Setting Platform.sh git remote..)
@@ -142,7 +142,7 @@ platform\:install:
 update:
 	@$(MAKE) -s prepare\:frontend
 	$(call message,$(PROJECT_NAME): Installing/updating backend dependencies...)
-	-$(call docker-wodby, php composer install --no-suggest)
+	-$(call docker-wodby, php composer install)
 	$(call message,$(PROJECT_NAME): Rebuilding Drupal cache...)
 	@$(MAKE) -s drush cache-rebuild
 	$(call message,$(PROJECT_NAME): Applying database updates...)
@@ -225,7 +225,7 @@ code\:check:
       $(DOCKER_ESLINT) .
 
 	$(call message,$(PROJECT_NAME): Checking React.js code for compliance with coding standards...)
-	docker-compose run -T --rm node yarn --silent run eslint
+	docker-compose run -T --rm node npm --silent run eslint
 
 code\:fix:
 	$(call message,$(PROJECT_NAME): Auto-fixing Drupal PHP code issues...)
@@ -241,16 +241,16 @@ code\:fix:
       $(DOCKER_ESLINT) --fix .
 
 	$(call message,$(PROJECT_NAME): Auto-fixing React.js code issues...)
-	docker-compose run -T --rm node yarn --silent run eslint --fix
+	docker-compose run -T --rm node npm --silent run eslint --fix
 
 #######################
 # Frontend operations #
 #######################
 
-yarn:
-	$(call message,$(PROJECT_NAME): Running Yarn command...)
+npm:
+	$(call message,$(PROJECT_NAME): Running npm command...)
 	$(eval ARGS := $(filter-out $@,$(MAKECMDGOALS)))
-	docker-compose run --rm node yarn $(ARGS)
+	docker-compose run --rm node npm $(ARGS)
 
 logs:
 	$(call message,$(PROJECT_NAME): Streaming the Next.js application logs...)

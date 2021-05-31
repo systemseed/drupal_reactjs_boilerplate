@@ -18,7 +18,7 @@ Here's short list of all commands available in the project.
   - `make composer`
 
 #### React.js
-  - `make yarn`
+  - `make npm`
   - `make logs`
 
 #### Code quality

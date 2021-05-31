@@ -1,6 +1,6 @@
 {
     "name": "systemseed/drupal_reactjs_boilerplate",
-    "description": "Project template for quick start with headless Drupal and React.js",
+    "description": "Project template for quick start with fully decoupled Drupal and React.",
     "type": "project",
     "license": "GPL-2.0-or-later",
     "authors": [
@@ -22,7 +22,6 @@
         }
     ],
     "require": {
-        "drupal-composer/drupal-scaffold": "^2.5",
         "cweagans/composer-patches": "^1.6",
         "vlucas/phpdotenv": "^2.4",
         "drush/drush": "^9.0.0",
@@ -30,8 +29,6 @@
         "webflo/drupal-finder": "^1.0.0",
         "webmozart/path-util": "^2.3",
         "contentacms/contenta_jsonapi": "^3.0"
-    },
-    "require-dev": {
     },
     "minimum-stability": "dev",
     "prefer-stable": true,

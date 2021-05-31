@@ -1,0 +1,6 @@
+# Next.js / React folders.
+node_modules
+.next
+
+# Environment overrides.
+.env

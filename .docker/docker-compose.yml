@@ -14,7 +14,9 @@ services:
       - 'traefik.frontend.rule=Host:${FRONTEND_HOST}, ${TESTS_FRONTEND_HOST}'
     expose:
       - "3000"
-    command: yarn start:dev
+    command: npm run start:dev
+    volumes:
+      - ../react:/app:cached
 
   mariadb:
     image: wodby/mariadb:$MARIADB_TAG
@@ -25,6 +27,8 @@ services:
       MYSQL_DATABASE: $DB_NAME
       MYSQL_USER: $DB_USER
       MYSQL_PASSWORD: $DB_PASSWORD
+    volumes:
+      - database-volume:/var/lib/mysql
 
   php:
     image: wodby/drupal-php:$PHP_TAG
@@ -36,6 +40,11 @@ services:
       DB_PASSWORD: $DB_PASSWORD
       DB_NAME: $DB_NAME
       DB_DRIVER: $DB_DRIVER
+      TEST_USERS_PASSWORD: ${TEST_USERS_PASSWORD}
+      ENVIRONMENT: ${ENVIRONMENT}
+    volumes:
+      - ../drupal:/var/www/html:cached
+      - ../${BACKUP_DIR}:/var/www/html/${BACKUP_DIR}:cached
 
   nginx:
     image: wodby/nginx:$NGINX_TAG
@@ -52,6 +61,8 @@ services:
       - 'traefik.backend=nginx'
       - 'traefik.port=80'
       - 'traefik.frontend.rule=Host:${BACKEND_HOST}, ${TESTS_BACKEND_HOST}'
+    volumes:
+      - ../drupal:/var/www/html:cached
 
   traefik:
     image: traefik:1.7.16
@@ -81,10 +92,18 @@ services:
       FRONTEND_URL: ${TESTS_FRONTEND_URL}
       TEST_USERS_PASSWORD: ${TEST_USERS_PASSWORD}
       DEVELOPMENT_MODULES: ${DEVELOPMENT_MODULES}
+    volumes:
+      - ../tests:/project/tests:cached
+      - ../tests/codeception.yml:/project/codeception.yml
+      - ../drupal:/app:ro # Read only.
 
   chrome:
     image: selenium/standalone-chrome:3.14.0-arsenic
     container_name: "${PROJECT_NAME}_chrome"
+    shm_size: 2gb
     expose:
       - 4444
-    shm_size: 2gb
+
+# Persistent data volumes.
+volumes:
+  database-volume:
