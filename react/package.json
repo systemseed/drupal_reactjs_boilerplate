@@ -13,7 +13,7 @@
     "next-redux-wrapper": "^3.0.0",
     "next-routes": "^1.4.2",
     "next-runtime-dotenv": "^1.0.1",
-    "node-sass": "^4.9.3",
+    "node-sass": "^7.0.0",
     "nprogress": "^0.2.0",
     "platformsh": "^1.0.0",
     "prop-types": "^15.6.2",
