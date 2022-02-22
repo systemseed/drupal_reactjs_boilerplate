@@ -19,6 +19,10 @@
         {
             "type": "composer",
             "url": "https://packages.drupal.org/8"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/2dareis2do/virtual_edit_link_field.git"
         }
     ],
     "require": {
@@ -28,7 +32,8 @@
         "composer/installers": "^1.2",
         "webflo/drupal-finder": "^1.0.0",
         "webmozart/path-util": "^2.3",
-        "contentacms/contenta_jsonapi": "^3.0"
+        "contentacms/contenta_jsonapi": "^3.0",
+        "2dareis2do/virtual_edit_link_field": "dev-master"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
@@ -76,5 +81,8 @@
         "preferred-install": {
             "*": "auto"
         }
+    },
+    "require-dev": {
+        "drupal/console": "~1.0"
     }
 }

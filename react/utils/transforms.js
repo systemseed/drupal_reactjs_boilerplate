@@ -7,4 +7,5 @@
 export const article = (data) => ({
   title: data.title,
   id: data.id,
+  editLink: data.editLink,
 });

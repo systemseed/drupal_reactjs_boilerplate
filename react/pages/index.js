@@ -25,10 +25,10 @@ class HomePage extends React.Component {
     const { articles } = this.props;
     return (
       <div>
-            Home page is working!<br /><br />
-            List of articles from Drupal:<br />
+        Home page is working!<br /><br />
+        List of articles from Drupal:<br />
         <ul>
-          {articles.map((article) => <li key={article.id}>{article.title} (id: {article.id})</li>)}
+          {articles.map((article) => <li key={article.id}>{article.title} (id: {article.id}) {article.editLink !== null ? <span><a href={article.editLink} title={"edit " + article.title} target="_blank" >Edit Link</a></span> : <span class="li">(Please login to drupal for edit link)</span>}</li>)}
         </ul>
       </div>
     );
@@ -39,6 +39,7 @@ HomePage.propTypes = {
   articles: PropTypes.arrayOf(PropTypes.shape({
     title: PropTypes.string,
     id: PropTypes.string,
+    editLink: PropTypes.string,
   })),
 };
 
