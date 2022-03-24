@@ -28,7 +28,7 @@ class HomePage extends React.Component {
             Home page is working!<br /><br />
             List of articles from Drupal:<br />
         <ul>
-          {articles.map((article) => <li key={article.id}>{article.title} (id: {article.id})</li>)}
+          {articles.map((article) => <li key={article.id}>{article.title} (id: {article.id}) <a href="{article.editlink}"></a></li>)}
         </ul>
       </div>
     );
@@ -39,6 +39,7 @@ HomePage.propTypes = {
   articles: PropTypes.arrayOf(PropTypes.shape({
     title: PropTypes.string,
     id: PropTypes.string,
+    editlink: PropTypes.string,
   })),
 };
 

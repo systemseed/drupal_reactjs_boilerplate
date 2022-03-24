@@ -1,0 +1,6 @@
+name: Article API Update module
+description: Test
+package: Custom
+
+type: module
+core: 8.x
