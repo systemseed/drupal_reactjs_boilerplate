@@ -75,6 +75,10 @@
     "config": {
         "preferred-install": {
             "*": "auto"
+        },
+        "allow-plugins": {
+            "composer/installers": true,
+            "cweagans/composer-patches": true
         }
     }
 }
