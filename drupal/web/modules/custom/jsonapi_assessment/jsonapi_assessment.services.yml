@@ -1,10 +1,5 @@
 services:
-  jsonapi_assessment.normalizer.typed_data:
-    class: Drupal\jsonapi_assessment\Normalizer\CustomTypedDataNormalizer
-    arguments: ['@entity.manager']
-    tags:
-      - { name: normalizer, priority: 1 }
-  jsonapi_response_alter.response_subscriber:
+  jsonapi_assessment.response_subscriber:
     class: Drupal\jsonapi_assessment\EventSubscriber\ResponseSubscriber
     arguments: [ '@module_handler' ]
     tags:
