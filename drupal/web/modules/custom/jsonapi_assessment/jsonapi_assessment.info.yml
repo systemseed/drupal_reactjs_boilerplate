@@ -1,0 +1,12 @@
+name: JSONAPI Assessment
+type: module
+description: Drupal reactjs boilerplace Assessment
+core: 8.x
+package: Web services
+dependencies:
+  - jsonapi:jsonapi
+  - jsonapi_extras:jsonapi_extras
+
+version: '8.x-1.0'
+project: 'jsonapi'
+datestamp: 1651580021
