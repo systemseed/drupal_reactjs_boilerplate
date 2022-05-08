@@ -13,8 +13,6 @@ use Symfony\Component\HttpFoundation\Response;
 function jsonapi_assessment_jsonapi_response_alter(array &$jsonapi_response, Response $response) {
     // loop data to alter
     if (isset($jsonapi_response['data']) && is_Array($jsonapi_response['data'])) {
-        $user = \Drupal::currentUser();
-
         $entity_manager = \Drupal::entityTypeManager();
         $access_handler = $entity_manager->getAccessControlHandler('node');
         $access = $access_handler->createAccess('article');
